@@ -1,0 +1,23 @@
+{
+  "name": "hackathon",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Aayush4527f/PISB-Hackathon.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Aayush4527f/PISB-Hackathon/issues"
+  },
+  "homepage": "https://github.com/Aayush4527f/PISB-Hackathon#readme",
+  "description": "",
+  "dependencies": {
+    "express": "^5.1.0"
+  }
+}
