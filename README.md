@@ -46,8 +46,6 @@ Pneumonia is a leading cause of mortality, especially in regions with limited ac
 
 ## 🧑‍🤝‍🧑 Project Team
 
-*(Add your team members' names here)*
-
 - Member 1: Aayush Chhajed
 - Member 2: Nirav Jain
 - Member 3: Aryan Kothawade
