@@ -5,7 +5,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon backend/server.js",
-    "start": "node backend/server.js"
+    "start": "node backend/server.js",
+    "build-css": "npx @tailwindcss/cli -i ./static/style.css -o ./static/output.css --watch"
   },
   "repository": {
     "type": "git",
@@ -20,9 +21,11 @@
   "homepage": "https://github.com/Aayush4527f/PISB-Hackathon#readme",
   "description": "",
   "dependencies": {
+    "@tailwindcss/cli": "^4.1.11",
     "dotenv": "^17.2.1",
     "express": "^5.1.0",
-    "mongoose": "^8.17.0"
+    "mongoose": "^8.17.0",
+    "tailwindcss": "^4.1.11"
   },
   "devDependencies": {
     "nodemon": "^3.1.10"
