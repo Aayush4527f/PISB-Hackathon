@@ -10,6 +10,6 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 
-export const serveFile = (file_address) => async(req,res)=>{
-    return res.sendFile(path.join(__dirname,'../../static',file_address));
-}
+// export const serveFile = (file_address) => async(req,res)=>{
+//     return res.sendFile(path.join(__dirname,'../../static',file_address));
+// }

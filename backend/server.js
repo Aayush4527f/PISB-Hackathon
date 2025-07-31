@@ -31,7 +31,7 @@ app.use(express.urlencoded({extended:true}));
 app.use('/',mainRoutes);
 
 // serving static files
-app.use('/static',express.static(path.join(__dirname, '../static')));
+app.use(express.static(path.join(__dirname, '../static'), { extensions: ['html'] }));
 
 // listen at PORT
 app.listen(PORT, () => {
