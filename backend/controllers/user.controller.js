@@ -33,7 +33,7 @@ export const registerUser = async (req,res)=>{
         input.password = await bcrypt.hash(input.password, salt); //HASHING PASSWORD
         const saved_user = await User.create({username:input.username,password:input.password,is_doc:input.is_doc});
         const token = jsonwebtoken.sign({username:input.username,is_doc:input.is_doc},process.env.SECRET);
-        return res.status(201).json({ success: true, token:token });
+        return res.status(201).json({ success: true, token:token, message:"successful registration"});
     }
     catch (error) {
         if(error.cause.code == 11000){ // username already exists
