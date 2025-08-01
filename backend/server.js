@@ -1,6 +1,8 @@
 // importing npm modules/libraries
 import express from "express";
 import dotenv from "dotenv";
+import cookieparser from "cookie-parser";
+
 
 // to server static file we need __dirname thats not in es module so we have to manually define it
 import path from 'path'
@@ -10,6 +12,8 @@ const __dirname = path.dirname(__filename);
 
 // ROUTES
 import mainRoutes from './routes/main.routes.js';
+import userRoutes from './routes/user.routes.js';
+
 
 // importing mongoose connection function to connect to database
 import connectDb from "./config_db.js";
@@ -27,8 +31,13 @@ const app = express();
 app.use(express.json()); 
 app.use(express.urlencoded({extended:true}));
 
-// main routes
+// cookies
+app.use(cookieparser());
+
+
+// routes
 app.use('/',mainRoutes);
+app.use('/api/user',userRoutes)
 
 // serving static files
 app.use(express.static(path.join(__dirname, '../static'), { extensions: ['html'] }));
