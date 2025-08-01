@@ -8,17 +8,6 @@ dotenv.config();
 // importing mongoose models
 import User from './models/user.model.js';
 
-// (filter,model) => (returns array of documents found)
-export const find_docs = async (filter,Model)=> {
-    try {
-        let docs_found = await Model.find(filter);
-        return docs_found;
-    } catch (error) {
-        console.error(error.message);
-        return null;
-    }
-};
-
 // (username,password) => (if password is correct return the user, else return false)
 export const bcrypt_auth = async(username,password)=>{
     try {

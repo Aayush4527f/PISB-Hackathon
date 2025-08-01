@@ -4,7 +4,7 @@ import dotenv from 'dotenv';
 import jsonwebtoken from 'jsonwebtoken';
 
 // importing UTILITIES
-import { find_docs, bcrypt_auth, validateUser } from '../utils.js';
+import { bcrypt_auth, validateUser } from '../utils.js';
 
 // read ENVIRONMENT variables
 dotenv.config();
@@ -15,27 +15,6 @@ const salt = Number(process.env.SALT);
 
 // importing mongoose MODELS
 import User from "../models/user.model.js";
-
-
-// controller for '/' (to get all users)
-// () => (all saved users)
-export const getUsers = async(req,res)=>{
-    // get all users saved
-    try {
-        let users = await find_docs({},User);
-        if(users === null){
-            return res.status(500).json({success:false,message:"internal server error"});
-        }
-        if(users.length === 0){
-            return res.status(404).json({success:false,message:"no users found"});
-        }
-        // return saved "users"
-        return res.status(200).json({success:true,users:users});
-    } catch (error) {
-        console.error(error.message);
-        return res.status(500).json({success:false,message:"something went wrong"});
-    }
-};
 
 // controller for '/register'
 // (username, password) => (if username is not taken then register user and return saved user, else return the error)
