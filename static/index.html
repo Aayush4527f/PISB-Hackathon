@@ -1,18 +1,40 @@
-<!-- NOTE use paths for any css or js file treating the static directory as root for html files -->
-
-<!-- NOTE if you want to make another page like login.html, just add login.html to /static 
- and you can access it by URL/login (in this case URL is localhost:8000) -->
- 
+<!-- login.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="output.css"> <!-- IMPORTANT do styling in style.css and run (npm run build-css) it will automatically apply all the styles-->
-    <title>your title</title>                 <!-- even if you want to use plain css just paste it in style.css and run the command it will work-->
+  <meta charset="UTF-8">
+  <title>Login | Pneumonia Detection</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js"></script>
+
 </head>
 <body>
-    <h1 class="underline">hello world</h1>
+  <img src="https://img.icons8.com/ios-filled/50/2563eb/stethoscope.png" class="logo" alt="Logo"/>
+  <div class="title">Pneumonia Detection</div>
+  <div class="subtitle">Sign in to your account to continue</div>
+
+  <div class="container">
+    <form>
+      <label>Email or Username</label>
+      <input type="email" placeholder="Enter your email address" required />
+
+      <label>Password</label>
+      <input type="password" id="password" placeholder="Enter your password" required />
+
+      <label>User Type</label>
+      <select required>
+        <option value="">Select User Type</option>
+        <option>Doctor</option>
+        <option>Patient</option>
+      </select>
+
+      <button type="submit">Log In</button>
+    </form>
+
+    <div class="links">
+      <a href="forgot.html">Forgot Password?</a> | 
+      <a href="register.html">Sign Up</a>
+    </div>
+  </div>
 </body>
-<script src="script.js"></script>
 </html>
