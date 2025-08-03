@@ -11,7 +11,7 @@ import User from './models/user.model.js';
 // (username,password) => (if password is correct return the user, else return false)
 export const bcrypt_auth = async(username,password)=>{
     try {
-        const match_user = await find_docs({username: username},User);
+        const match_user = await User.find({username: username});
         if (match_user[0] && await bcrypt.compare(password, match_user[0].password)) {
             return match_user[0];
         }
