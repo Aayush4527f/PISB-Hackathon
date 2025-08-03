@@ -18,6 +18,10 @@ import userRoutes from './routes/user.routes.js';
 // importing mongoose connection function to connect to database
 import connectDb from "./config_db.js";
 
+// importing the error handler
+import errorHandler from "./middleware/errorHandler.js";
+import { error } from "console";
+
 // to access environment variables
 dotenv.config(); 
 
@@ -41,6 +45,8 @@ app.use('/api/user',userRoutes)
 
 // serving static files
 app.use(express.static(path.join(__dirname, '../static'), { extensions: ['html'] }));
+
+app.use(errorHandler);
 
 // listen at PORT
 app.listen(PORT, () => {
