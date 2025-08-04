@@ -24,7 +24,7 @@ export const registerUser = async (req, res, next)=>{
     try {
         
         const saved_user = await User.create({username:input.username,password:input.password,is_doc:input.is_doc});
-        const token = jsonwebtoken.sign({username:saved_user.username,is_doc:saved_user.is_doc},process.env.SECRET);
+        const token = jsonwebtoken.sign({id:saved_user._id},process.env.SECRET,{expiresIn:"1d"});
         return res.status(201).json({ success: true, token:token, message:"successful registration"});
     }
     catch (error) {
@@ -61,7 +61,7 @@ export const loginUser = async (req, res, next) => {
         }
 
         if (authenticated_user) {
-            const token = jsonwebtoken.sign({username:authenticated_user.username,is_doc:authenticated_user.is_doc},process.env.SECRET);
+            const token = jsonwebtoken.sign({id:authenticated_user._id},process.env.SECRET,{expiresIn:"1d"});
             return res.status(200).json({ success: true, message: "you are logged in", token:token }); // if password is correct log in
         }else return res.status(401).json({ success: false, message: "wrong username or password" }); // otherwise show wrong username/pass
     
