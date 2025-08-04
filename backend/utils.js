@@ -28,13 +28,18 @@ export const authenticate_token = async(token)=>{
     try {
         let verified = jsonwebtoken.verify(token,process.env.SECRET);
         if(verified){
-            return {success:true,message:"authenticated",owner:verified.username};
-        }else{
-            return {success:false,message:"not authenticated"};
+            const saved_user = await User.findOne({_id:verified._id});
+            if(saved_user){
+                return {success:true,message:"authenticated",owner:saved_user.username,is_doc:saved_user.is_doc};
+            }else{
+                return {success:false,message:"user not found"};
+            }
         }
+
+        return {success:false,message:"not authenticated"};
+        
     } catch (error) {
         console.error(error.message);
         return {success:false,message:"not authenticated"};
     }
-
 };
