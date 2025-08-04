@@ -44,7 +44,7 @@ export const deleteScan = async(req, res, next) => {
 
         if(saved_scan == null){
             return res.status(404).json({ success: false, message: "scan not found" });
-        }else if(saved_scan.doctor !== req.user.id){
+        }else if(saved_scan.doctor.toString() !== req.user.id){
             return res.status(403).json({success:true, message:"Unauthorized"});
         }
 
