@@ -11,8 +11,8 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // ROUTES
-import mainRoutes from './routes/main.routes.js';
 import userRoutes from './routes/user.routes.js';
+import scanRoutes from './routes/scan.routes.js';
 
 
 // importing mongoose connection function to connect to database
@@ -20,7 +20,6 @@ import connectDb from "./config_db.js";
 
 // importing the error handler
 import errorHandler from "./middleware/errorHandler.js";
-import { error } from "console";
 
 // to access environment variables
 dotenv.config(); 
@@ -40,8 +39,8 @@ app.use(cookieparser());
 
 
 // routes
-app.use('/',mainRoutes);
-app.use('/api/user',userRoutes)
+app.use('/api/user',userRoutes);
+app.use('/api/scan',scanRoutes);
 
 // serving static files
 app.use(express.static(path.join(__dirname, '../static'), { extensions: ['html'] }));

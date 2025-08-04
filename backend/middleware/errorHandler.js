@@ -6,7 +6,7 @@ const errorHandler = (err,req,res,next)=>{
     }
 
     if (err.code === 11000 || (err.cause && err.cause.code === 11000)) {
-        return res.status(409).json({ success: false, message: 'Username already exists' });
+        return res.status(409).json({ success: false, message: 'Already exists' });
     }
 
     return res.status(500).json({ success: false, message: 'Something went wrong on the server' });
