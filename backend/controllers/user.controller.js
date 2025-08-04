@@ -12,7 +12,6 @@ dotenv.config();
 import User from "../models/user.model.js";
 
 // controller for '/register'
-// (username, password) => (if username is not taken then register user and return saved user, else return the error)
 export const registerUser = async (req, res, next)=>{
     // get username and password from input
     let input = req.body;
@@ -28,22 +27,12 @@ export const registerUser = async (req, res, next)=>{
         return res.status(201).json({ success: true, token:token, message:"successful registration"});
     }
     catch (error) {
-        // if(error.name == "ValidationError"){
-        //     return res.status(400).json({success: false, message: error.message})
-        // }
-        // if(error.cause.code == 11000){ // username already exists
-        //     return res.status(409).json({ success: false, message: "user already exists" });
-        // }
-
-        // console.error(error.message);
-        // return res.status(500).json({ success: false, message: "something went wrong" });
         next(error);
         
     }
 }
 
 // controller for '/login'
-// (username, password) => (if authenticated return "true", else "false")
 export const loginUser = async (req, res, next) => {
     // get the username and password from input
     let input = req.body;
@@ -66,14 +55,11 @@ export const loginUser = async (req, res, next) => {
         }else return res.status(401).json({ success: false, message: "wrong username or password" }); // otherwise show wrong username/pass
     
     } catch (error) {
-        // console.error(error.message);
-        // return res.status(500).json({success:false,message:"something went wrong"});
         next(error);
     }
 };
 
 // controller for '/changepass'
-// (username, password, new_pass) => (if authenticated update password and return "true", else return "false")
 export const changePass = async (req, res, next) => {
     // get username, password and new_pass from input
     let input = req.body;
@@ -102,11 +88,6 @@ export const changePass = async (req, res, next) => {
         }
         return res.status(401).json({ success: false, message: "wrong username or password" });
     } catch (error) {
-        // if(error.name == "ValidationError"){
-        //     return res.status(400).json({success: false, message: error.message})
-        // }
-        // console.error(error.message);
-        // return res.status(500).json({success:false,message:"something went wrong"});
         next(error);
     }
 };
@@ -134,8 +115,6 @@ export const deleteUser = async (req, res, next) => {
         return res.status(401).json({ success: false, message: "wrong username or password" });
         
     } catch (error) {
-        // console.error(error.message);
-        // return res.status(500).json({success:false,message:"something went wrong"});
         next(error);
     }
 
