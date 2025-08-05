@@ -30,7 +30,7 @@ export const uploadScan = async (req, res, next) => {
             const saved_url = await uploadToCloudinary(req.file.buffer, 'xray-scans');
 
             // save scan 
-            await Scan.create({ doctor: req.user.id, patient_id: req.body.patient_id, url: saved_url, is_pneumonia: diagnosis });
+            await Scan.create({ doctor: req.user.id, patient_id: req.body.patient_id, url: saved_url, is_pneumonia: diagnosis, summary:summary, note:req.body.note });
         }
         // return the output from python child process
         return res.status(200).json({ success: true, summary: summary, diagnosis: diagnosis });

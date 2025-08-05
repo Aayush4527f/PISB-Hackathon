@@ -17,6 +17,11 @@ const scanSchema = mongoose.Schema({
         type: Boolean,
         required: true
     },
+    summary:{
+        type: String,
+        trim: true,
+        default: ""
+    },
     url:{
         type: String,
         required: true,
