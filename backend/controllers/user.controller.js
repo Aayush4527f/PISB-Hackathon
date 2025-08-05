@@ -10,6 +10,7 @@ dotenv.config();
 
 // importing mongoose MODELS
 import User from "../models/user.model.js";
+import Scan from "../models/scan.model.js";
 
 // controller for '/register'
 export const registerUser = async (req, res, next)=>{
@@ -108,6 +109,8 @@ export const deleteUser = async (req, res, next) => {
             return res.status(500).json({success:false,message:"internal server error"});
         }
         if (authenticated_user) {
+            const deleted = await Scan.deleteMany({doctor:authenticated_user.id})
+            console.log(`deleted ${deleted.deletedCount} scans for the doctor's account deletion`);
             await authenticated_user.deleteOne();
         
             return res.status(200).json({ success: true, message: "user successfully deleted" });
