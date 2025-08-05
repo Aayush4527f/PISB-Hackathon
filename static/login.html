@@ -1,0 +1,69 @@
+<!-- login.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Login | Pneumonia Detection</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js"></script>
+
+</head>
+<body>
+  <img src="https://img.icons8.com/ios-filled/50/2563eb/stethoscope.png" class="logo" alt="Logo"/>
+  <div class="title">Pneumonia Detection</div>
+  <div class="subtitle">Sign in to your account to continue</div>
+
+  <div class="container">
+    <form>
+      <label>Email or Username</label>
+      <input type="username" placeholder="Enter your username" id="username" required />
+
+      <label>Password</label>
+      <input type="password" id="password" placeholder="Enter your password" id="password" required />
+
+      <button type="submit">Log In</button>
+    </form>
+
+    <div class="links">
+      <a href="register.html">Sign Up</a>
+    </div>
+  </div>
+</body>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+  const registerForm = document.querySelector("form");
+
+  registerForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const username = document.getElementById("username").value.trim();
+    const password = document.getElementById("password").value;
+
+    if (!username || !password) {
+      alert("Please fill in all fields.");
+      return;
+    }
+
+    try {
+      const res = await fetch("/api/user/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, password }),
+      });
+
+      const data = await res.json();
+
+      if (data.success) {
+        localStorage.setItem('authToken', data.token);
+        window.location.replace("/");
+      } else {
+        alert(data.message || "Login failed.");
+      }
+    } catch (err) {
+      console.error(err);
+      alert("Something went wrong. Please try again.");
+    }
+  });
+});
+</script>
+</html>
