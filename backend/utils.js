@@ -3,6 +3,8 @@ import bcrypt from 'bcrypt';
 import dotenv from 'dotenv';
 import cloudinary from './config/cloudinary.js'; // Import your configured Cloudinary instance
 import streamifier from 'streamifier';
+import axios from 'axios';
+import FormData from 'form-data';
 
 dotenv.config();
 
@@ -26,7 +28,7 @@ export const bcrypt_auth = async(username,password)=>{
 };
 
 
-const uploadToCloudinary = (imageBuffer, folderName) => {
+export const uploadToCloudinary = (imageBuffer, folderName) => {
     // Wrap the upload logic in a Promise
     return new Promise((resolve, reject) => {
 
@@ -50,4 +52,27 @@ const uploadToCloudinary = (imageBuffer, folderName) => {
     });
 };
 
-export default uploadToCloudinary;
+
+export const getMLPrediction = async (imageBuffer, originalFilename) => {
+    // URL of your running Python Flask server
+    const pythonApiUrl = process.env.PYTHON_API_URL || 'http://localhost:5000/predict';
+
+    const formData = new FormData();
+    // The Python server expects a field named 'file'
+    formData.append('file', imageBuffer, { filename: originalFilename });
+
+    try {
+        console.log('Forwarding image to Python ML service...');
+        const response = await axios.post(pythonApiUrl, formData, {
+            headers: {
+                ...formData.getHeaders(),
+            },
+        });
+        console.log('Received prediction:', response.data);
+        return response.data; // e.g., { prediction: 'Pneumonia', confidence: 0.98 }
+    } catch (error) {
+        console.error("Error calling Python ML service:", error.message);
+        // Throw an error so the main controller can handle it
+        throw new Error('Could not get a diagnosis from the ML model.');
+    }
+};

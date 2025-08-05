@@ -7,7 +7,7 @@ dotenv.config();
 // importing mongoose MODELS
 import Scan from "../models/scan.model.js";
 
-import uploadToCloudinary from '../utils.js';
+import {uploadToCloudinary, getMLPrediction} from '../utils.js';
 
 // controller for getting results
 export const uploadScan = async (req, res, next) => {
@@ -17,7 +17,12 @@ export const uploadScan = async (req, res, next) => {
             return res.status(400).json({ success: false, message: "missing parameters" });
         }
         // get the diagnosis from ml model (pass req.file.buffer)
-        let py = { diagnosis: false, summary: "normal" }; // TEMPORARY
+        // let py = { diagnosis: false, summary: "normal" }; // TEMPORARY
+        const mlResult = await getMLPrediction(req.file.buffer, req.file.originalname);
+
+        const diagnosis = mlResult.prediction === 'Pneumonia'; // true if 'Pneumonia', else false
+        const summary = `Prediction: ${mlResult.prediction} (Confidence: ${(mlResult.confidence * 100).toFixed(2)}%)`;
+
 
         // if req.user.is_doc then save image to cloudinary and save the results
         if (req.user.is_doc) {
@@ -25,10 +30,10 @@ export const uploadScan = async (req, res, next) => {
             const saved_url = await uploadToCloudinary(req.file.buffer, 'xray-scans');
 
             // save scan 
-            await Scan.create({ doctor: req.user.id, patient_id: req.body.patient_id, url: saved_url, is_pneumonia: py.diagnosis });
+            await Scan.create({ doctor: req.user.id, patient_id: req.body.patient_id, url: saved_url, is_pneumonia: diagnosis });
         }
         // return the output from python child process
-        return res.status(200).json({ success: true, summary: py.summary, diagnosis: py.diagnosis });
+        return res.status(200).json({ success: true, summary: summary, diagnosis: diagnosis });
     }
     catch (error) {
         next(error);
