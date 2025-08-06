@@ -5,10 +5,9 @@ import User from '../models/user.model.js';
 export const protect = async (req, res, next) => {
     let token;
 
-    if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
+    if ( req.cookies.token ) {
         try {
-            // Get token from header (e.g., "Bearer <token>")
-            token = req.headers.authorization.split(' ')[1];
+            token = req.cookies.token;
 
             // Verify token
             const decoded = jsonwebtoken.verify(token, process.env.SECRET);
@@ -18,12 +17,14 @@ export const protect = async (req, res, next) => {
 
             next();
         } catch (error) {
+            console.error(error.message);
             return res.status(401).json({ success: false, message: 'Not authorized, token failed' });
         }
     }
-
+    
     if (!token) {
-        return res.status(401).json({ success: false, message: 'Not authorized, no token' });
+        return res.redirect("/login");
+        // return res.status(401).json({ success: false, message: 'Not authorized, no token' });
     }
 };
 

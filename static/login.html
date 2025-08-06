@@ -54,7 +54,7 @@
       const data = await res.json();
 
       if (data.success) {
-        localStorage.setItem('authToken', data.token);
+        document.cookie = `token=${data.token}`;
         window.location.replace("/");
       } else {
         alert(data.message || "Login failed.");

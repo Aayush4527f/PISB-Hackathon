@@ -42,10 +42,10 @@ export const uploadScan = async (req, res, next) => {
 
 export const deleteScan = async(req, res, next) => {
     try {
-        if(!req.body.scan_id){
+        if(!req.body.patient_id){
             return res.status(400).json({ success: false, message: "missing parameters" });
         }
-        const saved_scan = await Scan.findOne({_id:req.body.scan_id});
+        const saved_scan = await Scan.findOne({patient_id:req.body.patient_id});
 
         if(saved_scan == null){
             return res.status(404).json({ success: false, message: "scan not found" });
@@ -77,7 +77,7 @@ export const deleteScan = async(req, res, next) => {
 export const dashboard = async (req, res, next) => {
     try {
         // get all the scans for the doctor
-        let all_scans = await Scan.find({ doctor: req.user.id });
+        let all_scans = await Scan.find({ doctor: req.user.id }).select('-doctor -_id');
         // return the scans
         return res.status(200).json({ success: true, message: "successful", scans: all_scans });
     } catch (error) {

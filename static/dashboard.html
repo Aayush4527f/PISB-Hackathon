@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pneumonia Detection Dashboard</title>
+  <link rel="stylesheet" href="dashboard.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+</head>
+
+<body>
+  <header class="navbar">
+    <div class="logo">🩺 Pneumonia Detection</div>
+    <nav class="nav-links">
+      <a href="/">Upload X-ray</a>
+      <a href="#" class="active">Dashboard</a>
+      <a href="/login" id="logout">Log Out</a>
+    </nav>
+  </header>
+
+  <main class="dashboard">
+    <h1>Dashboard</h1>
+    <p class="subtitle">View and manage your uploaded X-ray images and analysis results</p>
+
+    <div class="search-filter">
+      <input type="text" placeholder="Search by Patient ID or Date">
+    </div>
+
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Patient ID</th>
+          <th>Note</th>
+          <th>Image URL</th>
+          <th>Is Pneumonia</th>
+          <th>Summary</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Example row -->
+        <tr>
+          <td>2025-07-31</td>
+          <td>Patient123</td>
+          <td>Routine checkup</td>
+          <td><a href="#" class="image-link">View Image</a></td>
+          <td><span class="tag analyzed">Yes</span></td>
+          <td><button class="view-btn">Summary</button></td>
+        </tr>
+      </tbody>
+    </table>
+  </main>
+</body>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const logout_btn = document.getElementById("logout");
+
+    logout_btn.addEventListener("click", async (e) => {
+      e.preventDefault();
+      document.cookie = "token" + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=" + "/" + ";";
+      window.location.replace("/login");
+    });
+  });
+  let records = []
+
+  async function get_scans() {
+    try {
+      const res = await fetch("/api/scan/dashboard", {
+        method: "POST",
+        body: JSON.stringify({}),
+      });
+
+      const data = await res.json();
+
+      if (data.success) {
+        records = data.scans;
+        renderTable(records);
+      } else {
+        alert(data.message || "Login failed.");
+      }
+    } catch (err) {
+      console.error(err);
+      alert("Something went wrong. Please try again.");
+    }
+
+  }
+  get_scans();
+
+  const tbody = document.querySelector(".data-table tbody");
+  const searchInput = document.querySelector(".search-filter input");
+
+  function renderTable(data) {
+    tbody.innerHTML = "";
+    data.forEach((item) => {
+      const row = document.createElement("tr");
+      row.innerHTML = `
+      <td>${item.createdAt}</td>
+      <td>${item.patient_id}</td>
+      <td>${item.note}</td>
+      <td><a href="${item.url}" target="_blank" class="image-link">View Image</a></td>
+      <td><span class="tag ${item.is_pneumonia ? "analyzed" : ""}">${item.is_pneumonia ? "Yes" : "No"}</span></td>
+      <td><button class="view-btn">View</button></td>
+    `;
+      tbody.appendChild(row);
+    });
+  }
+
+  searchInput.addEventListener("input", () => {
+    const keyword = searchInput.value.toLowerCase();
+    const filtered = records.filter((item) =>
+      item.patient_id.toLowerCase().includes(keyword) || item.createdAt.includes(keyword)
+    );
+    renderTable(filtered);
+  });
+</script>
+
+</html>

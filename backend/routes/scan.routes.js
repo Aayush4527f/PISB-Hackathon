@@ -15,7 +15,7 @@ const router = express.Router();
 router.post("/", protect, upload.single("scanImage") ,uploadScan);
 
 // dashboard
-router.get("/dashboard", protect, isDoctor, dashboard);
+router.post("/dashboard", protect, isDoctor, dashboard);
 
 // update notes
 router.post("/updateNote",protect, isDoctor, updateNote);

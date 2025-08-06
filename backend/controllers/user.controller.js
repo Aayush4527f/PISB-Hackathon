@@ -60,38 +60,6 @@ export const loginUser = async (req, res, next) => {
     }
 };
 
-// controller for '/changepass'
-export const changePass = async (req, res, next) => {
-    // get username, password and new_pass from input
-    let input = req.body;
-
-    if (!input.username || !input.password || !input.new_pass) {
-        return res.status(400).json({ success: false, message: "enter username and password fields" });
-    }
-
-    // pass and new pass should not be same
-    if(input.password == input.new_pass){
-        return res.status(400).json({error:true,message:"new and old pass cant be same"})
-    }
-
-    // authenticate user
-    try {
-        let authenticated_user = await bcrypt_auth(input.username,input.password);
-        
-        if(authenticated_user === null){
-            return res.status(500).json({success:false,message:"internal server error"});
-        }
-
-        if (authenticated_user) { // if authenticated change the password in the database
-            authenticated_user.password = input.new_pass;
-            await authenticated_user.save();
-            return res.status(200).json({ success: true, message: "your password has been succesfully changed" });
-        }
-        return res.status(401).json({ success: false, message: "wrong username or password" });
-    } catch (error) {
-        next(error);
-    }
-};
 
 // controller for '/delete'
 export const deleteUser = async (req, res, next) => {

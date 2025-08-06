@@ -13,6 +13,7 @@ const __dirname = path.dirname(__filename);
 // ROUTES
 import userRoutes from './routes/user.routes.js';
 import scanRoutes from './routes/scan.routes.js';
+import mainRoutes from './routes/main.routes.js';
 
 
 // importing mongoose connection function to connect to database
@@ -41,6 +42,7 @@ app.use(cookieparser());
 // routes
 app.use('/api/user',userRoutes);
 app.use('/api/scan',scanRoutes);
+app.use('/',mainRoutes);
 
 // serving static files
 app.use(express.static(path.join(__dirname, '../static'), { extensions: ['html'] }));

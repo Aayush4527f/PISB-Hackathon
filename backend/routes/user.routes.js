@@ -2,7 +2,7 @@
 import express from 'express'
 
 // importing controllers
-import {registerUser,loginUser, changePass, deleteUser} from '../controllers/user.controller.js';
+import {registerUser,loginUser, deleteUser} from '../controllers/user.controller.js';
 
 // initialize "router"
 const router = express.Router();
@@ -13,8 +13,6 @@ router.post("/register", registerUser);
 // LOGIN USER
 router.post("/login",loginUser);
 
-// CHANGE PASSWORD
-router.post("/changepass",changePass);
 
 // DELETE USER
 router.post("/delete",deleteUser);
