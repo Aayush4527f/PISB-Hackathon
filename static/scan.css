@@ -6,7 +6,7 @@
 }
 
 html {
-  font-size: 16px; /* 1rem = 16px (base unit) */
+  font-size: 16px; 
 }
 
 body {
@@ -14,7 +14,7 @@ body {
   background-color: #f4f7fa;
   color: #333;
   line-height: 1.6;
-  padding-bottom: 3.75rem; /* 60px */
+  padding-bottom: 3.75rem; 
 }
 
 /* Navbar */
@@ -24,8 +24,8 @@ body {
   align-items: center;
   background-color: #2f80ed;
   color: #fff;
-  padding: 1rem 2.5rem; /* 16px 40px */
-  box-shadow: 0 0.125rem 0.5rem rgba(0, 0, 0, 0.1); /* 2px 8px */
+  padding: 1rem 2.5rem; 
+  box-shadow: 0 0.125rem 0.5rem rgba(0, 0, 0, 0.1); 
 }
 
 .logo {
@@ -33,18 +33,18 @@ body {
   align-items: center;
   font-size: 1.4rem;
   font-weight: bold;
-  gap: 0.75rem; /* 12px */
+  gap: 0.75rem; 
 }
 
 .logo img {
-  height: 2.25rem; /* 36px */
+  height: 2.25rem; 
   filter: invert(100%);
 }
 
 .menu {
   display: flex;
   align-items: center;
-  gap: 2rem; /* 32px */
+  gap: 2rem; 
 }
 
 .menu a,
@@ -54,9 +54,9 @@ body {
   font-weight: 500;
   display: flex;
   align-items: center;
-  gap: 0.375rem; /* 6px */
-  padding: 0.5rem 0.875rem; /* 8px 14px */
-  border-radius: 0.375rem; /* 6px */
+  gap: 0.375rem; 
+  padding: 0.5rem 0.875rem; 
+  border-radius: 0.375rem; 
   transition: background-color 0.3s ease;
 }
 
@@ -68,12 +68,12 @@ body {
 /* Page Header */
 .page-header {
   text-align: center;
-  padding: 3.125rem 1.25rem 1.25rem; /* 50px 20px 20px */
+  padding: 3.125rem 1.25rem 1.25rem; 
 }
 
 .page-header h1 {
   font-size: 2rem;
-  margin-bottom: 0.625rem; /* 10px */
+  margin-bottom: 0.625rem; 
   color: #1e2a38;
 }
 
@@ -85,31 +85,31 @@ body {
 /* Upload Card */
 .upload-card {
   background-color: #fff;
-  margin: 1.875rem auto; /* 30px */
+  margin: 1.875rem auto; 
   max-width: 80vw;
-  padding: 2.5rem 2.1875rem; /* 40px 35px */
-  border-radius: 0.75rem; /* 12px */
-  box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.08); /* 4px 12px */
+  padding: 2.5rem 2.1875rem; 
+  border-radius: 0.75rem; 
+  box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.08); 
   text-align: center;
 }
 
 .upload-card h2 {
   color: #1e2a38;
-  margin-bottom: 0.875rem; /* 14px */
+  margin-bottom: 0.875rem; 
   font-size: 1.8rem;
 }
 
 .upload-card p {
   color: #666;
   font-size: 1rem;
-  margin-bottom: 1.5rem; /* 24px */
+  margin-bottom: 1.5rem; 
 }
 
 /* Upload Area */
 .upload-area {
-  border: 0.125rem dashed #007bff; /* 2px */
-  border-radius: 0.75rem; /* 12px */
-  padding: 2.5rem 1.5625rem; /* 40px 25px */
+  border: 0.125rem dashed #007bff; 
+  border-radius: 0.75rem; 
+  padding: 2.5rem 1.5625rem; 
   background-color: #f0f8ff;
   cursor: pointer;
   font-size: 1rem;
@@ -120,13 +120,13 @@ body {
 .upload-area i {
   font-size: 2.5rem;
   display: block;
-  margin-bottom: 0.75rem; /* 12px */
+  margin-bottom: 0.75rem; 
   color: #007bff;
 }
 
 .upload-area p {
   font-weight: 500;
-  margin-bottom: 0.5rem; /* 8px */
+  margin-bottom: 0.5rem; 
   font-size: 1.05rem;
 }
 
@@ -137,12 +137,12 @@ body {
 
 /* Upload Button */
 .upload-btn {
-  margin-top: 1.25rem; /* 20px */
-  padding: 0.75rem 1.5rem; /* 12px 24px */
+  margin-top: 1.25rem; 
+  padding: 0.75rem 1.5rem; 
   background-color: #2f80ed;
   color: white;
   border: none;
-  border-radius: 0.5rem; /* 8px */
+  border-radius: 0.5rem; 
   font-size: 1rem;
   font-weight: 500;
   cursor: pointer;
@@ -158,30 +158,30 @@ body {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
-  gap: 1.25rem; /* 20px */
-  margin: 2.5rem auto; /* 40px */
+  gap: 1.25rem; 
+  margin: 2.5rem auto; 
   max-width: 80vw;
-  padding: 0 1.25rem; /* 20px */
+  padding: 0 1.25rem; 
 }
 
 .info-card {
   background-color: #fff;
-  padding: 1.5625rem; /* 25px */
-  flex: 1 1 17.5rem; /* 280px */
+  padding: 1.5625rem; 
+  flex: 1 1 17.5rem; 
   text-align: center;
-  border-radius: 0.625rem; /* 10px */
-  box-shadow: 0 0.25rem 0.625rem rgba(0, 0, 0, 0.08); /* 4px 10px */
+  border-radius: 0.625rem; 
+  box-shadow: 0 0.25rem 0.625rem rgba(0, 0, 0, 0.08); 
 }
 
 .info-card i {
   font-size: 2rem;
   color: #007bff;
-  margin-bottom: 0.625rem; /* 10px */
+  margin-bottom: 0.625rem; 
 }
 
 .info-card h3 {
   color: #1e2a38;
-  margin-bottom: 0.375rem; /* 6px */
+  margin-bottom: 0.375rem; 
 }
 
 .info-card p {
@@ -191,13 +191,13 @@ body {
 
 /* How-To Section */
 .how-to-upload {
-  max-width: 56.25rem; /* 900px */
-  margin: 2.5rem auto; /* 40px */
-  padding: 0 1.25rem; /* 20px */
+  max-width: 56.25rem; 
+  margin: 2.5rem auto; 
+  padding: 0 1.25rem; 
 }
 
 .how-to-upload h3 {
-  margin-bottom: 1.25rem; /* 20px */
+  margin-bottom: 1.25rem; 
   color: #1e2a38;
   font-size: 1.3rem;
 }
@@ -209,8 +209,8 @@ body {
 .how-to-upload li {
   display: flex;
   align-items: flex-start;
-  gap: 0.875rem; /* 14px */
-  margin-bottom: 1.125rem; /* 18px */
+  gap: 0.875rem; 
+  margin-bottom: 1.125rem; 
 }
 
 .how-to-upload span {
@@ -218,7 +218,7 @@ body {
   background-color: #007bff;
   color: #fff;
   border-radius: 50%;
-  padding: 0.5rem 0.8125rem; /* 8px 13px */
+  padding: 0.5rem 0.8125rem; 
   font-size: 1rem;
 }
 
@@ -232,11 +232,11 @@ body {
 .notice {
   background-color: #fff3cd;
   color: #856404;
-  border: 0.0625rem solid #ffeeba; /* 1px */
-  padding: 0.9375rem 1.25rem; /* 15px 20px */
-  margin: 2.5rem auto; /* 40px */
-  max-width: 50rem; /* 800px */
-  border-radius: 0.375rem; /* 6px */
+  border: 0.0625rem solid #ffeeba; 
+  padding: 0.9375rem 1.25rem; 
+  margin: 2.5rem auto; 
+  max-width: 50rem; 
+  border-radius: 0.375rem; 
   font-size: 0.95rem;
 }
 
@@ -245,14 +245,14 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.75rem; /* 12px */
+  gap: 0.75rem; 
   background-color: #fff;
-  padding: 1.5625rem; /* 25px */
-  margin-top: 1.25rem; /* 20px */
+  padding: 1.5625rem; 
+  margin-top: 1.25rem; 
   margin: auto;
   width: 100%;
   max-width: 50vw;
-  border-radius: 0.625rem; /* 10px */
+  border-radius: 0.625rem; 
 }
 
 .patient-info-form label {
@@ -262,9 +262,9 @@ body {
 }
 
 .patient-info-form input {
-  padding: 0.625rem 0.875rem; /* 10px 14px */
-  border: 0.0625rem solid #ccc; /* 1px */
-  border-radius: 0.375rem; /* 6px */
+  padding: 0.625rem 0.875rem; 
+  border: 0.0625rem solid #ccc; 
+  border-radius: 0.375rem; 
   font-size: 1rem;
   width: 100%;
   background-color: #f9f9f9;
