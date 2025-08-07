@@ -1,38 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Patient Dashboard - Pneumonia Detection</title>
   <link rel="stylesheet" href="style_p.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    /* Added some basic styling for the image preview */
+    .upload-area img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      border-radius: 10px;
+    }
+  </style>
 </head>
+
 <body>
 
-  <!-- Navbar -->
   <div class="navbar">
     <div class="logo">
       <img src="https://img.icons8.com/ios-filled/50/ffffff/stethoscope.png" alt="logo" />
       Pneumonia Detection
     </div>
     <div class="menu">
-      <span class="hover-button"><i class="fas fa-upload"></i>Upload X-ray</span>
+      <a class="hover-button" href="#"><i class="fas fa-upload"></i>Upload X-ray</a>
       <a href="/dashboard.html" class="hover-button"><i class="fas fa-user"></i>Dashboard</a>
       <a href="/login.html" class="hover-button" id="logout">Log Out</a>
     </div>
   </div>
 
-  <!-- Page Header -->
   <div class="page-header">
     <h1>Upload Your X-ray Image</h1>
     <p>Upload your chest X-ray image to share with your doctor for pneumonia analysis.</p>
   </div>
 
-  <!-- Upload Card -->
   <div class="upload-card">
     <h2>X-ray Image Upload</h2>
     <p>Please select a clear chest X-ray image. Your doctor will review it for pneumonia detection.</p>
-    
+
     <form id="uploadForm" enctype="multipart/form-data">
       <div class="upload-area" id="uploadArea">
         <i class="fas fa-upload upload-icon"></i>
@@ -40,11 +48,26 @@
         <small>or click to browse<br>Supports PNG and JPEG formats, max 10MB</small>
         <input type="file" id="fileInput" name="xray" accept=".png, .jpg, .jpeg" hidden />
       </div>
-      <button type="submit" class="upload-btn">Upload Image</button>
+
+      <div class="patient-info-form">
+        <label for="patient_id">Patient ID</label>
+        <input type="text" id="patient_id" placeholder="Enter patient ID (Mandatory)" />
+
+        <label for="note">Notes</label>
+        <input type="text" id="note" placeholder="Enter Notes (Optional)" />
+      </div>
+
+      <button type="submit" id="submit_btn" class="upload-btn">Upload Image</button>
+      <button type="button" id="scan_another_btn" class="upload-btn" style="display: none;">Scan Another</button>
     </form>
+
+    <!-- Results Display Section -->
+    <div id="results_section" style="display: none; margin-top: 20px; padding: 20px; border: 2px solid #4CAF50; border-radius: 10px; background-color: #f9fff9;">
+      <h3>Analysis Results</h3>
+      <div id="results_content"></div>
+    </div>
   </div>
 
-  <!-- Info Section -->
   <div class="info-section">
     <div class="info-card">
       <i>🔒</i>
@@ -61,41 +84,61 @@
       <h3>Better Care</h3>
       <p>Early detection helps your doctor provide the best possible treatment.</p>
     </div>
-    </div>
-
-      <div class="patient-info-form">
-    <label for="patient_id">Patient ID</label>
-    <input type="text" id="patient_id" placeholder="Enter patient ID (Mandatory)" />
-
-    <label for="note">Notes</label>
-    <input type="text" id="note" placeholder="Enter Notes (Optional)" />
   </div>
-</div>
 
-  <!-- How-To Section -->
   <div class="how-to-upload">
     <h3>How to Upload Your X-ray</h3>
     <ol>
-      <li><span>1</span><p><strong>Get Your X-ray Image:</strong> Obtain a digital copy of your chest X-ray from your healthcare provider or imaging center.</p></li>
-      <li><span>2</span><p><strong>Upload the Image:</strong> Drag and drop or click to select your X-ray image file (PNG or JPEG format, max 10MB).</p></li>
-      <li><span>3</span><p><strong>Share with Your Doctor:</strong> Once uploaded, your doctor will be able to review the image and provide analysis results.</p></li>
+      <li><span>1</span>
+        <p><strong>Get Your X-ray Image:</strong> Obtain a digital copy of your chest X-ray from your healthcare
+          provider or imaging center.</p>
+      </li>
+      <li><span>2</span>
+        <p><strong>Upload the Image:</strong> Drag and drop or click to select your X-ray image file (PNG or JPEG
+          format, max 10MB).</p>
+      </li>
+      <li><span>3</span>
+        <p><strong>Share with Your Doctor:</strong> Once uploaded, your doctor will be able to review the image and
+          provide analysis results.</p>
+      </li>
     </ol>
   </div>
 
-  <!-- Notice -->
   <div class="notice">
-    <strong>Important Notice:</strong> This tool is designed to assist healthcare professionals and should not replace professional medical advice. Always consult with your doctor for proper diagnosis and treatment.
+    <strong>Important Notice:</strong> This tool is designed to assist healthcare professionals and should not replace
+    professional medical advice. Always consult with your doctor for proper diagnosis and treatment.
   </div>
 
-  <!-- Script -->
   <script>
     document.addEventListener("DOMContentLoaded", () => {
+      const uploadForm = document.getElementById("uploadForm");
       const fileInput = document.getElementById("fileInput");
       const uploadArea = document.getElementById("uploadArea");
       const logout_btn = document.getElementById("logout");
+      const submit_btn = document.getElementById("submit_btn");
+      const scan_another_btn = document.getElementById("scan_another_btn");
+      const results_section = document.getElementById("results_section");
+      const results_content = document.getElementById("results_content");
 
+      // --- Function to create the image preview ---
+      function displayPreview(file) {
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = (e) => {
+            // Clear the upload area and show the image
+            uploadArea.innerHTML = `<img src="${e.target.result}" alt="X-ray preview"/>`;
+          };
+          reader.readAsDataURL(file);
+        }
+      }
+
+      // Add event listeners for file selection
       uploadArea.addEventListener("click", () => fileInput.click());
+      fileInput.addEventListener("change", () => {
+        displayPreview(fileInput.files[0]);
+      });
 
+      // Drag and Drop listeners
       uploadArea.addEventListener("dragover", (e) => {
         e.preventDefault();
         uploadArea.style.backgroundColor = "#e0efff";
@@ -109,20 +152,95 @@
         e.preventDefault();
         uploadArea.style.backgroundColor = "#f0f8ff";
         fileInput.files = e.dataTransfer.files;
+        displayPreview(fileInput.files[0]);
       });
 
-      document.getElementById("uploadForm").addEventListener("submit", async (e) => {
+      // --- FIXED: Form submission logic with FormData ---
+      submit_btn.addEventListener("click", async (e) => {
         e.preventDefault();
         const file = fileInput.files[0];
-        if (!file) return alert("Please select an image first.");
-        
-        const formData = new FormData();
-        formData.append("xray", file);
+        const patientId = document.getElementById("patient_id").value;
+        const note = document.getElementById("note").value;
 
-        console.log("Uploading:", file.name);
-        alert("Image uploaded successfully!"); // Replace with actual fetch if needed
+        if (!file) {
+          return alert("Please select an image first.");
+        }
+        if (!patientId) {
+          return alert("Please enter the Patient ID.");
+        }
+
+        try {
+          // Show loading state
+          submit_btn.textContent = "Uploading...";
+          submit_btn.disabled = true;
+
+          // Create FormData object
+          const formData = new FormData();
+          formData.append("scanImage", file);
+          formData.append("patient_id", patientId);
+          formData.append("note", note);
+
+          const res = await fetch("/api/scan/", {
+            method: "POST",
+            body: formData, // Send FormData (no Content-Type header needed)
+          });
+
+          const data = await res.json();
+          
+          // Log the response to console
+          console.log("Response:", data);
+
+          if (data.success) {
+            // Show results
+            results_content.innerHTML = `
+              <div style="margin-bottom: 15px;">
+                <strong>Summary:</strong> ${data.summary}
+              </div>
+              <div style="margin-bottom: 15px;">
+                <strong>Diagnosis:</strong> ${data.diagnosis ? 'Pneumonia Detected' : 'No Pneumonia Detected'}
+              </div>
+              <div style="color: #4CAF50; font-weight: bold;">
+                ✅ Analysis Complete
+              </div>
+            `;
+            results_section.style.display = "block";
+            submit_btn.style.display = "none";
+            scan_another_btn.style.display = "block";
+          } else {
+            // Show error message
+            results_content.innerHTML = `
+              <div style="color: #f44336; font-weight: bold;">
+                ❌ ${data.message}
+              </div>
+            `;
+            results_section.style.display = "block";
+            results_section.style.borderColor = "#f44336";
+            results_section.style.backgroundColor = "#fff9f9";
+            submit_btn.style.display = "none";
+            scan_another_btn.style.display = "block";
+          }
+        } catch (err) {
+          console.error("Upload error:", err);
+          // Show error and reset button
+          results_content.innerHTML = `
+            <div style="color: #f44336; font-weight: bold;">
+              ❌ Something went wrong. Please try again.
+            </div>
+          `;
+          results_section.style.display = "block";
+          results_section.style.borderColor = "#f44336";
+          results_section.style.backgroundColor = "#fff9f9";
+          submit_btn.textContent = "Upload Image";
+          submit_btn.disabled = false;
+        }
       });
 
+      // Scan another button functionality
+      scan_another_btn.addEventListener("click", () => {
+        window.location.reload();
+      });
+
+      // --- FIXED: Logout button event listener moved inside DOMContentLoaded ---
       logout_btn.addEventListener("click", (e) => {
         e.preventDefault();
         document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
@@ -132,4 +250,5 @@
   </script>
 
 </body>
+
 </html>

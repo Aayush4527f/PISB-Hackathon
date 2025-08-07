@@ -109,6 +109,8 @@ body {
   background-color: #f0f8ff;
   cursor: pointer;
   font-size: 1rem;
+  max-width: 40vw;
+  margin: auto;
 }
 
 .upload-area i {
@@ -237,14 +239,16 @@ body {
 .patient-info-form {
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 12px;
   background-color: #fff;
   padding: 25px;
   margin-top: 20px;
+  margin: auto;
   width: 100%;
-  max-width: 80vw;
+  max-width: 50vw;
   border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  /* box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08); */
 }
 
 .patient-info-form label {
