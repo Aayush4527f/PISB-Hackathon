@@ -11,7 +11,7 @@ import { protect, isDoctor } from "../middleware/auth.js";
 const router = express.Router();
 
 router.get("/dashboard",protect,isDoctor,serveFile("dashboard.html"));
-router.get("/",protect,isDoctor,serveFile("scan.html"));
+router.get("/",protect,serveFile("scan.html"));
 
 // export router
 export default router;
