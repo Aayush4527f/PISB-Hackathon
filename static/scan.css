@@ -5,25 +5,27 @@
   box-sizing: border-box;
 }
 
+html {
+  font-size: 16px; /* 1rem = 16px (base unit) */
+}
+
 body {
   font-family: 'Segoe UI', sans-serif;
   background-color: #f4f7fa;
   color: #333;
   line-height: 1.6;
-  padding-bottom: 60px;
+  padding-bottom: 3.75rem; /* 60px */
 }
 
 /* Navbar */
 .navbar {
-  width: 100%;
-  background-color: #2f80ed;
-  color: white;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 60px;
-  padding: 0 30px;
-  box-sizing: border-box;
+  background-color: #2f80ed;
+  color: #fff;
+  padding: 1rem 2.5rem; /* 16px 40px */
+  box-shadow: 0 0.125rem 0.5rem rgba(0, 0, 0, 0.1); /* 2px 8px */
 }
 
 .logo {
@@ -31,33 +33,34 @@ body {
   align-items: center;
   font-size: 1.4rem;
   font-weight: bold;
-  gap: 12px;
+  gap: 0.75rem; /* 12px */
 }
 
 .logo img {
-  height: 36px;
+  height: 2.25rem; /* 36px */
   filter: invert(100%);
 }
 
 .menu {
   display: flex;
   align-items: center;
-  gap: 32px;
+  gap: 2rem; /* 32px */
 }
 
-.menu a {
+.menu a,
+.menu span {
   text-decoration: none;
   color: #fff;
   font-weight: 500;
   display: flex;
   align-items: center;
-  gap: 6px;
-  padding: 8px 14px;
-  border-radius: 6px;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  gap: 0.375rem; /* 6px */
+  padding: 0.5rem 0.875rem; /* 8px 14px */
+  border-radius: 0.375rem; /* 6px */
+  transition: background-color 0.3s ease;
 }
 
-.menu a.hover-button:hover {
+.menu .hover-button:hover {
   background-color: rgba(255, 255, 255, 0.15);
   cursor: pointer;
 }
@@ -65,124 +68,210 @@ body {
 /* Page Header */
 .page-header {
   text-align: center;
-  margin: 50px 20px 20px;
+  padding: 3.125rem 1.25rem 1.25rem; /* 50px 20px 20px */
 }
 
 .page-header h1 {
   font-size: 2rem;
-  margin-bottom: 10px;
+  margin-bottom: 0.625rem; /* 10px */
   color: #1e2a38;
-  font-weight: bold;
 }
 
 .page-header p {
-  color: #555;
   font-size: 1rem;
-  margin-top: 8px;
+  color: #555;
 }
 
 /* Upload Card */
 .upload-card {
-  max-width: 800px;
-  background: white;
-  margin: auto;
-  padding: 30px 40px;
-  border-radius: 10px;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+  background-color: #fff;
+  margin: 1.875rem auto; /* 30px */
+  max-width: 80vw;
+  padding: 2.5rem 2.1875rem; /* 40px 35px */
+  border-radius: 0.75rem; /* 12px */
+  box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.08); /* 4px 12px */
+  text-align: center;
 }
 
 .upload-card h2 {
-  font-size: 22px;
-  margin-bottom: 10px;
+  color: #1e2a38;
+  margin-bottom: 0.875rem; /* 14px */
+  font-size: 1.8rem;
 }
 
 .upload-card p {
   color: #666;
-  margin-bottom: 20px;
+  font-size: 1rem;
+  margin-bottom: 1.5rem; /* 24px */
 }
 
+/* Upload Area */
 .upload-area {
-  border: 2px dashed #007bff;
-  border-radius: 8px;
+  border: 0.125rem dashed #007bff; /* 2px */
+  border-radius: 0.75rem; /* 12px */
+  padding: 2.5rem 1.5625rem; /* 40px 25px */
   background-color: #f0f8ff;
-  padding: 40px 20px;
-  text-align: center;
-  margin-bottom: 20px;
-  transition: background-color 0.3s;
+  cursor: pointer;
+  font-size: 1rem;
+  max-width: 40vw;
+  margin: auto;
 }
 
-.upload-area:hover {
-  background-color: #d7ebff;
-}
-
-.upload-icon {
-  font-size: 36px;
-  color: #318cf8;
-  margin-bottom: 12px;
+.upload-area i {
+  font-size: 2.5rem;
+  display: block;
+  margin-bottom: 0.75rem; /* 12px */
+  color: #007bff;
 }
 
 .upload-area p {
-  font-weight: 600;
-  font-size: 18px;
+  font-weight: 500;
+  margin-bottom: 0.5rem; /* 8px */
+  font-size: 1.05rem;
 }
 
 .upload-area small {
-  color: #777;
-  font-size: 14px;
+  color: #666;
+  font-size: 0.9rem;
 }
 
-.upload-card label {
-  display: block;
-  margin-bottom: 6px;
-  font-weight: 600;
+/* Upload Button */
+.upload-btn {
+  margin-top: 1.25rem; /* 20px */
+  padding: 0.75rem 1.5rem; /* 12px 24px */
+  background-color: #2f80ed;
+  color: white;
+  border: none;
+  border-radius: 0.5rem; /* 8px */
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
-.upload-card input[type="text"] {
-  width: 100%;
-  padding: 12px;
-  font-size: 15px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
+.upload-btn:hover {
+  background-color: #2565c7;
 }
 
-/* Instructions Box */
-.instructions-card {
-  max-width: 800px;
-  background: white;
-  margin: 30px auto;
-  padding: 25px 35px;
-  border-radius: 10px;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08); /* Added shadow */
+/* Info Cards */
+.info-section {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1.25rem; /* 20px */
+  margin: 2.5rem auto; /* 40px */
+  max-width: 80vw;
+  padding: 0 1.25rem; /* 20px */
 }
 
-.instructions-card h3 {
-  font-size: 20px;
-  font-weight: 600;
-  margin-bottom: 15px;
+.info-card {
+  background-color: #fff;
+  padding: 1.5625rem; /* 25px */
+  flex: 1 1 17.5rem; /* 280px */
+  text-align: center;
+  border-radius: 0.625rem; /* 10px */
+  box-shadow: 0 0.25rem 0.625rem rgba(0, 0, 0, 0.08); /* 4px 10px */
 }
 
-.instructions-card ul {
+.info-card i {
+  font-size: 2rem;
+  color: #007bff;
+  margin-bottom: 0.625rem; /* 10px */
+}
+
+.info-card h3 {
+  color: #1e2a38;
+  margin-bottom: 0.375rem; /* 6px */
+}
+
+.info-card p {
+  font-size: 0.95rem;
+  color: #555;
+}
+
+/* How-To Section */
+.how-to-upload {
+  max-width: 56.25rem; /* 900px */
+  margin: 2.5rem auto; /* 40px */
+  padding: 0 1.25rem; /* 20px */
+}
+
+.how-to-upload h3 {
+  margin-bottom: 1.25rem; /* 20px */
+  color: #1e2a38;
+  font-size: 1.3rem;
+}
+
+.how-to-upload ol {
   list-style: none;
-  padding-left: 0;
 }
 
-.instructions-card li {
-  margin-bottom: 12px;
-  color: #3b4a60;
-  position: relative;
-  padding-left: 20px;
+.how-to-upload li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.875rem; /* 14px */
+  margin-bottom: 1.125rem; /* 18px */
 }
 
-.instructions-card li::before {
-  content: '●';
-  position: absolute;
-  left: 0;
-  color: #318cf8;
-  font-size: 14px;
-  line-height: 1;
+.how-to-upload span {
+  font-weight: bold;
+  background-color: #007bff;
+  color: #fff;
+  border-radius: 50%;
+  padding: 0.5rem 0.8125rem; /* 8px 13px */
+  font-size: 1rem;
 }
 
+.how-to-upload p {
+  margin: 0;
+  color: #444;
+  font-size: 0.96rem;
+}
 
-a.active {
-  text-decoration: underline;
+/* Notice */
+.notice {
+  background-color: #fff3cd;
+  color: #856404;
+  border: 0.0625rem solid #ffeeba; /* 1px */
+  padding: 0.9375rem 1.25rem; /* 15px 20px */
+  margin: 2.5rem auto; /* 40px */
+  max-width: 50rem; /* 800px */
+  border-radius: 0.375rem; /* 6px */
+  font-size: 0.95rem;
+}
+
+/* Patient Info Form */
+.patient-info-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem; /* 12px */
+  background-color: #fff;
+  padding: 1.5625rem; /* 25px */
+  margin-top: 1.25rem; /* 20px */
+  margin: auto;
+  width: 100%;
+  max-width: 50vw;
+  border-radius: 0.625rem; /* 10px */
+}
+
+.patient-info-form label {
+  font-weight: 600;
+  color: #1e2a38;
+  font-size: 0.95rem;
+}
+
+.patient-info-form input {
+  padding: 0.625rem 0.875rem; /* 10px 14px */
+  border: 0.0625rem solid #ccc; /* 1px */
+  border-radius: 0.375rem; /* 6px */
+  font-size: 1rem;
+  width: 100%;
+  background-color: #f9f9f9;
+  transition: border-color 0.2s;
+}
+
+.patient-info-form input:focus {
+  border-color: #2f80ed;
+  outline: none;
 }
