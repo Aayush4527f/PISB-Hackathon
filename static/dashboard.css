@@ -1,40 +1,70 @@
 /* dashboard.css */
-body {
+* {
   margin: 0;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #f9fafb;
-  color: #111827;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #f4f7fa;
+  color: #333;
+  line-height: 1.6;
+  padding-bottom: 60px;
 }
 
 .navbar {
-  background-color: #2563eb;
-  color: white;
-  padding: 15px 30px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  background-color: #2f80ed;
+  color: #fff;
+  padding: 16px 40px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .logo {
-  font-size: 20px;
+  display: flex;
+  align-items: center;
+  font-size: 1.4rem;
   font-weight: bold;
+  gap: 12px;
 }
 
-.nav-links a {
-  margin-left: 20px;
-  color: white;
+.logo img {
+  height: 36px;
+  filter: invert(100%);
+}
+
+
+.menu {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.menu a {
   text-decoration: none;
+  color: #fff;
   font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border-radius: 6px;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.nav-links a.active {
-  text-decoration: underline;
+.menu a.hover-button:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+  cursor: pointer;
 }
 
 .dashboard {
   padding: 40px;
-  max-width: 1000px;
+  max-width: 80vw;
   margin: auto;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
 .subtitle {
