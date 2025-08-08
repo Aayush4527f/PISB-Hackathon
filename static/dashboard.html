@@ -5,17 +5,16 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Pneumonia Detection Dashboard</title>
-  <link rel="stylesheet" href="dashboard.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-
+  <link rel="stylesheet" href="dashboard.css">
 </head>
 
 <body>
   <div class="navbar">
     <div class="logo">
       <img src="https://img.icons8.com/ios-filled/50/ffffff/stethoscope.png" alt="logo" />
- Pneumonia Detection
-</div>
+      <span>Pneumonia Detection</span>
+    </div>
     <div class="menu">
       <a class="hover-button" href="/"><i class="fas fa-upload"></i>Upload X-ray</a>
       <a href="#" class="hover-button"><i class="fas fa-user"></i>Dashboard</a>
@@ -31,30 +30,43 @@
       <input type="text" placeholder="Search by Patient ID or Date">
     </div>
 
-    <table class="data-table">
-      <thead>
-        <tr>
-          <th>Date</th>
-          <th>Patient ID</th>
-          <th>Note</th>
-          <th>Image URL</th>
-          <th>Is Pneumonia</th>
-          <th>Summary</th>
-        </tr>
-      </thead>
-      <tbody>
-        <!-- Example row -->
-        <tr>
-          <td>2025-07-31</td>
-          <td>Patient123</td>
-          <td>Routine checkup</td>
-          <td><a href="#" class="image-link">View Image</a></td>
-          <td><span class="tag analyzed">Yes</span></td>
-          <td><button class="view-btn">Summary</button></td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="table-container">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Patient ID</th>
+              <th>Note</th>
+              <th>Image URL</th>
+              <th>Is Pneumonia</th>
+              <th>Summary</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+          </tbody>
+        </table>
+    </div>
   </main>
+
+  <!-- Modal for showing summary -->
+  <div id="summaryModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2>Analysis Summary</h2>
+      <p id="summaryText"></p>
+    </div>
+  </div>
+
+  <!-- Modal for showing notes -->
+  <div id="noteModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2>Patient Note</h2>
+      <p id="noteText"></p>
+    </div>
+  </div>
+
 </body>
 <script>
   document.addEventListener("DOMContentLoaded", () => {
@@ -66,7 +78,8 @@
       window.location.replace("/login");
     });
   });
-  let records = []
+  
+  let records = [];
 
   async function get_scans() {
     try {
@@ -81,14 +94,15 @@
         records = data.scans;
         renderTable(records);
       } else {
-        alert(data.message || "Login failed.");
+        alert(data.message || "Failed to load scans.");
       }
     } catch (err) {
       console.error(err);
       alert("Something went wrong. Please try again.");
     }
-
   }
+  
+  // Initial load of the scans
   get_scans();
 
   const tbody = document.querySelector(".data-table tbody");
@@ -98,25 +112,91 @@
     tbody.innerHTML = "";
     data.forEach((item) => {
       const row = document.createElement("tr");
+      const pneumoniaStatus = item.is_pneumonia;
+      const tagClass = pneumoniaStatus ? 'not-analyzed' : 'analyzed';
+      const tagText = pneumoniaStatus ? 'Yes' : 'No';
+
       row.innerHTML = `
-      <td>${item.createdAt}</td>
-      <td>${item.patient_id}</td>
-      <td>${item.note}</td>
-      <td><a href="${item.url}" target="_blank" class="image-link">View Image</a></td>
-      <td><span class="tag ${!item.is_pneumonia ? "analyzed" : ""}">${item.is_pneumonia ? "Yes" : "No"}</span></td>
-      <td><button class="view-btn">View</button></td>
-    `;
+        <td>${item.createdAt}</td>
+        <td>${item.patient_id}</td>
+        <td><button class="view-btn" onclick="showNote('${item.note}')">View</button></td>
+        <td><a href="${item.url}" target="_blank" class="image-link">View Image</a></td>
+        <td><span class="tag ${tagClass}">${tagText}</span></td>
+        <td><button class="view-btn" onclick="showSummary('${item.summary}')">View</button></td>
+        <td><button class="delete-btn" onclick="deleteScan('${item.patient_id}')">Delete</button></td> 
+      `;
       tbody.appendChild(row);
     });
+  }
+  
+  async function deleteScan(patientId) {
+    // A custom modal for confirmation would be better than confirm()
+    if (!confirm(`Are you sure you want to delete the scan for Patient ID: ${patientId}?`)) {
+        return;
+    }
+
+    try {
+        const res = await fetch('/api/scan/delete', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ patient_id: patientId }),
+        });
+
+        const data = await res.json();
+
+        if (data.success) {
+            alert('Scan deleted successfully.');
+            window.location.reload();
+        } else {
+            alert(data.message || 'Failed to delete the scan.');
+        }
+    } catch (err) {
+        console.error('Delete error:', err);
+        alert('An error occurred while trying to delete the scan.');
+    }
   }
 
   searchInput.addEventListener("input", () => {
     const keyword = searchInput.value.toLowerCase();
     const filtered = records.filter((item) =>
-      item.patient_id.toLowerCase().includes(keyword) || item.createdAt.includes(keyword)
+      item.patient_id.toLowerCase().includes(keyword) || item.createdAt.toLowerCase().includes(keyword)
     );
     renderTable(filtered);
   });
+
+  // Modal functionality
+  const summaryModal = document.getElementById("summaryModal");
+  const summaryText = document.getElementById("summaryText");
+  const noteModal = document.getElementById("noteModal");
+  const noteText = document.getElementById("noteText");
+  const closeBtns = document.querySelectorAll(".close");
+
+  function showSummary(summary) {
+    summaryText.textContent = summary || "No summary available.";
+    summaryModal.style.display = "flex";
+  }
+
+  function showNote(note) {
+    noteText.textContent = note || "No note available.";
+    noteModal.style.display = "flex";
+  }
+
+  function closeModal() {
+      summaryModal.style.display = "none";
+      noteModal.style.display = "none";
+  }
+
+  closeBtns.forEach(btn => {
+    btn.onclick = closeModal;
+  });
+
+  window.onclick = function(event) {
+    if (event.target == summaryModal || event.target == noteModal) {
+      closeModal();
+    }
+  }
 </script>
 
 </html>
