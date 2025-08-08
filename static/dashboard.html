@@ -103,7 +103,7 @@
       <td>${item.patient_id}</td>
       <td>${item.note}</td>
       <td><a href="${item.url}" target="_blank" class="image-link">View Image</a></td>
-      <td><span class="tag ${item.is_pneumonia ? "analyzed" : ""}">${item.is_pneumonia ? "Yes" : "No"}</span></td>
+      <td><span class="tag ${!item.is_pneumonia ? "analyzed" : ""}">${item.is_pneumonia ? "Yes" : "No"}</span></td>
       <td><button class="view-btn">View</button></td>
     `;
       tbody.appendChild(row);
