@@ -6,7 +6,9 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon backend/server.js",
     "start": "node backend/server.js",
-    "build-css": "npx @tailwindcss/cli -i ./static/style.css -o ./static/output.css --watch"
+    "start-ml":"python ml/final.py",
+    "build-css": "npx @tailwindcss/cli -i ./static/style.css -o ./static/output.css --watch",
+    "install-py":"pip install -r requirements.txt"
   },
   "repository": {
     "type": "git",

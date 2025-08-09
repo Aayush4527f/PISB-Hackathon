@@ -21,7 +21,7 @@ export const uploadScan = async (req, res, next) => {
         const mlResult = await getMLPrediction(req.file.buffer, req.file.originalname);
 
         const diagnosis = mlResult.prediction === 'Pneumonia'; // true if 'Pneumonia', else false
-        const summary = `Prediction: ${mlResult.prediction} (Confidence: ${(mlResult.confidence * 100).toFixed(2)}%)`;
+        const summary = mlResult.summary;
 
 
         // if req.user.is_doc then save image to cloudinary and save the results

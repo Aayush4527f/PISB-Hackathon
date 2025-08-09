@@ -106,6 +106,7 @@
       const uploadForm = document.getElementById("uploadForm");
       const fileInput = document.getElementById("fileInput");
       const uploadArea = document.getElementById("uploadArea");
+      const patientInfoForm = document.querySelector(".patient-info-form");
       const logout_btn = document.getElementById("logout");
       const submit_btn = document.getElementById("submit_btn");
       const scan_another_btn = document.getElementById("scan_another_btn");
@@ -121,6 +122,21 @@
           };
           reader.readAsDataURL(file);
         }
+      }
+
+      /**
+       * Formats raw text from the analysis summary into HTML.
+       * Replaces newline characters with <br> and **bold** syntax with <strong> tags.
+       * @param {string} text - The raw text to format.
+       * @returns {string} - The formatted HTML string.
+       */
+      function formatGeminiOutput(text) {
+        if (!text) return 'N/A';
+        // Replace **text** with <strong>text</strong> for bolding
+        let formattedText = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+        // Replace newline characters with <br> tags
+        formattedText = formattedText.replace(/\n/g, '<br>');
+        return formattedText;
       }
 
       uploadArea.addEventListener("click", () => fileInput.click());
@@ -182,17 +198,22 @@
 
           const data = await res.json();
           
-          results_section.style.display = "block";
+          // Hide form elements and show results section
+          uploadArea.style.display = "none";
+          patientInfoForm.style.display = "none";
           submit_btn.style.display = "none";
           scan_another_btn.style.display = "inline-block";
+          results_section.style.display = "block";
 
           if (data.success) {
             results_title.textContent = "Analysis Complete";
             results_section.style.border = "2px solid #4CAF50";
             results_section.style.backgroundColor = "#f0fff0";
+            // Format the summary from the response
+            const formattedSummary = formatGeminiOutput(data.summary);
             results_content.innerHTML = `
-              <p><strong>Summary:</strong> ${data.summary || 'N/A'}</p>
-              <p><strong>Diagnosis:</strong> ${data.diagnosis ? 'Pneumonia Detected' : 'No Pneumonia Detected'}</p>
+            <p><strong>Diagnosis:</strong> ${data.diagnosis ? 'Pneumonia Detected' : 'No Pneumonia Detected'}</p>
+            <p><strong>Summary:</strong> ${formattedSummary}</p>
             `;
           } else {
             results_title.textContent = "Analysis Failed";
@@ -202,13 +223,16 @@
           }
         } catch (err) {
           console.error("Upload error:", err);
+          // Hide form elements even if an error occurs
+          uploadArea.style.display = "none";
+          patientInfoForm.style.display = "none";
+          submit_btn.style.display = "none";
+          scan_another_btn.style.display = "inline-block";
           results_section.style.display = "block";
           results_title.textContent = "Error";
           results_section.style.border = "2px solid #f44336";
           results_section.style.backgroundColor = "#fff9f9";
           results_content.innerHTML = `<p>A network or server error occurred. Please try again.</p>`;
-          submit_btn.style.display = "none";
-          scan_another_btn.style.display = "inline-block";
         }
       });
 

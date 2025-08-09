@@ -4,84 +4,152 @@ from flask import Flask, request, jsonify
 from PIL import Image
 import io
 from tensorflow.keras.models import load_model
+import google.generativeai as genai
+from dotenv import load_dotenv
 
-# Initialize Flask app
+# --- Step 1: Initialize Flask and Load Environment Variables ---
 app = Flask(__name__)
 
-# --- Step 1: Load your trained model ---
-print("Loading model...")
-# Load the model from the H5 file
-# Make sure 'pneumonia_detection_model.h5' is in the same directory
-model = load_model('C:/Users/admin/Desktop/code/clg/hackathon/ml/pneumonia_detection_model.h5')
-print("Model loaded successfully!")
+# Load environment variables from ../.env
+# This will look for a .env file in the directory *above* the current one
+dotenv_path = os.path.join(os.path.dirname(__file__), '..', '.env')
+load_dotenv(dotenv_path=dotenv_path)
 
-# --- Step 2: Define your preprocessing function (Updated from Notebook) ---
+# --- Step 2: Configure the Gemini API ---
+# Make sure you have GOOGLE_API_KEY="YOUR_API_KEY" in your .env file
+try:
+    api_key = os.getenv("GOOGLE_API_KEY")
+    if not api_key:
+        raise ValueError("GOOGLE_API_KEY not found in .env file or environment variables.")
+    genai.configure(api_key=api_key)
+    print("Gemini API configured successfully.")
+except Exception as e:
+    print(f"Error configuring Gemini API: {e}")
+    # You might want to handle this more gracefully, but for now, we print the error
+    genai_model = None
+
+# --- Step 3: Load your trained model ---
+print("Loading pneumonia detection model...")
+try:
+    # Make sure 'pneumonia_detection_model.h5' is in the same directory or provide the full path
+    model_path = 'C:/Users/admin/Desktop/code/clg/hackathon/ml/pneumonia_detection_model.h5'
+    if not os.path.exists(model_path):
+        raise FileNotFoundError(f"Model file not found at: {model_path}")
+    model = load_model(model_path)
+    print("Model loaded successfully!")
+except Exception as e:
+    print(f"Error loading Keras model: {e}")
+    model = None # Set model to None if loading fails
+
+# --- Step 4: Define your image preprocessing function ---
 def preprocess_image(img_bytes):
     """
-    Preprocesses the image for model prediction based on the notebook.
-    - Converts bytes to a PIL Image
-    - Converts to grayscale
-    - Resizes to 150x150
-    - Converts to a NumPy array
-    - Normalizes the pixel values
-    - Expands dimensions to match the model's input shape
+    Preprocesses the image for model prediction.
     """
-    # Open the image from bytes and convert to grayscale
     img = Image.open(io.BytesIO(img_bytes)).convert('L')
-    
-    # Resize the image to the target size (150x150)
     img = img.resize((150, 150))
-    
-    # Convert the image to a numpy array
     img_array = np.array(img)
-    
-    # Normalize the image data by dividing by 255.0
     img_array = img_array / 255.0
-    
-    # Expand the dimensions to match the model's input shape (1, 150, 150, 1)
     img_array = np.expand_dims(img_array, axis=0)
     img_array = np.expand_dims(img_array, axis=-1)
-    
     return img_array
 
-# --- Step 3: Define the prediction endpoint ---
+# --- (NEW) Step 5: Define a placeholder for your specific scan analysis ---
+def analyze_scan_for_details(image_bytes):
+    """
+    This is a placeholder function.
+    In a real application, this function would contain the logic
+    to analyze the scan and return specific details.
+    For now, it returns a hardcoded example string.
+    """
+    # In your real implementation, you would run your other model/logic here
+    print("Performing detailed scan analysis (placeholder)...")
+    return "Fluid accumulation has been observed in the lower lobe of the left lung."
+
+
+# --- Step 6: Define the function to get recommendations from Gemini ---
+def get_gemini_summary(scan_details):
+    """
+    Sends a prompt to the Gemini API with the scan details and returns a summary.
+    """
+    if 'genai_model' in globals() and genai_model is None:
+        return "Could not generate summary because the Gemini API is not configured."
+
+    # Select the model
+    gemini_model = genai.GenerativeModel('gemini-1.5-flash-latest')
+
+    # Construct the prompt
+    prompt = f"""
+    You are a helpful medical assistant. Your role is to provide a clear, personalized summary and general recommendations for a patient based on their chest X-ray findings. Do not provide a diagnosis, but explain the findings in simple terms.
+
+    A patient's X-ray scan shows potential signs of pneumonia. Here is a specific description of the condition:
+    "{scan_details}"
+
+    Based on this, please generate a response that includes:
+    1. A brief, easy-to-understand summary of the findings.
+    2. General, non-prescriptive recommendations (e.g., "it is important to consult with a healthcare provider," "ensure you get plenty of rest," "stay hydrated").
+    3. A concluding sentence encouraging the patient to discuss the full report with their doctor for a formal diagnosis and treatment plan.
+
+    Keep the tone reassuring and professional. Structure the output clearly.
+    """
+
+    try:
+        print("Sending prompt to Gemini API...")
+        response = gemini_model.generate_content(prompt)
+        print("Received response from Gemini.")
+        return response.text
+    except Exception as e:
+        print(f"An error occurred while calling the Gemini API: {e}")
+        return "There was an error generating the personalized summary."
+
+
+# --- Step 7: Define the prediction endpoint (Updated) ---
 @app.route('/predict', methods=['POST'])
 def predict():
-    # Check if an image file was posted
+    if model is None:
+        return jsonify({'error': 'Pneumonia detection model is not available.'}), 503
+
     if 'file' not in request.files:
         return jsonify({'error': 'no file provided'}), 400
 
     file = request.files['file']
 
     try:
-        # Read image bytes
         img_bytes = file.read()
         
-        # Preprocess the image
+        # Preprocess the image for the Keras model
         processed_image = preprocess_image(img_bytes)
         
         # Make a prediction
         prediction = model.predict(processed_image)
-
-        # The prediction is a numpy array, e.g., [[0.98]]
-        # Convert it to a native Python float.
         score = float(prediction[0][0])
-
-        # Determine the label based on a threshold (e.g., 0.5)
         label = 'Pneumonia' if score > 0.5 else 'Normal'
 
-        # Create a dictionary to return as JSON
+        # (MODIFIED) Initialize summary variable
+        summary = "No summary needed for a normal scan."
+
+        # (MODIFIED) If pneumonia is detected, get more details and a Gemini summary
+        if label == 'Pneumonia':
+            # 1. Get specific details from your other function
+            scan_details = analyze_scan_for_details(img_bytes)
+            
+            # 2. Get the personalized summary from Gemini
+            summary = get_gemini_summary(scan_details)
+
+        # (MODIFIED) Create the final result dictionary
         result = {
             'prediction': label,
-            'confidence': score
+            'confidence': score,
+            'summary': summary  # Add the summary to the response
         }
 
         return jsonify(result)
 
     except Exception as e:
-        return jsonify({'error': str(e)}), 500
+        # Log the full error for debugging
+        print(f"An error occurred in the /predict endpoint: {e}")
+        return jsonify({'error': 'An internal error occurred. See server logs for details.'}), 500
 
-# --- Step 4: Run the app ---
+# --- Step 8: Run the app ---
 if __name__ == '__main__':
-    # Use port 5000, which is common for Flask apps
     app.run(host='0.0.0.0', port=5000)

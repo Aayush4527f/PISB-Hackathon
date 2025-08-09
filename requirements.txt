@@ -1,0 +1,6 @@
+Flask
+numpy
+Pillow
+tensorflow
+google-generativeai
+python-dotenv
