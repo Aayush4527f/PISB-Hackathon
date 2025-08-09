@@ -30,23 +30,23 @@ Pneumonia is a leading cause of mortality, especially in regions with limited ac
 
 ## 🛠️ Technology Stack
 
-- **Frontend**: Static **HTML**, **JavaScript**, and **Tailwind CSS** for a clean, responsive, and modern user interface.
-- **Backend**: **Node.js** and **Express.js** to handle API requests, user logic, and process management.
+- **Frontend**: Static **HTML** and **JavaScript** for a clean, responsive, and modern user interface.
+- **Backend**: **Node.js**, **Express.js**, **jsonwebtoken** and **Flask** to handle API requests, user logic, and process management.
 - **Database**: **MongoDB** for storing user data, scan history, and analysis results.
-- **Machine Learning**: A **Python** script (`script.py`) that runs the pneumonia detection model. The Node.js backend spawns this script as a child process to perform the analysis.
+- **Machine Learning**: A lite **Flask** server (`server.py`) that runs the pneumonia detection model.
 
 ## ⚙️ System Architecture
 
 1.  A user (Patient or Doctor) uploads an X-ray image through the web interface.
 2.  The frontend sends the image to the Node.js/Express.js backend.
-3.  The backend saves the image and spawns a Python process, passing the image path to `script.py`.
+3.  The backend sends the image to the flask server, passing the image to `XXX:5000/predict`.
 4.  The Python script executes the ML model, which analyzes the image and returns a prediction (e.g., "Pneumonia" or "Normal").
-5.  The backend receives the prediction, saves the result to the MongoDB database, and sends it back to the frontend.
-6.  The user sees the result on their screen. If a patient is diagnosed, the app queries the database for a list of doctors to display.
+5.  The backend receives the prediction, saves the result to the MongoDB database and cloudinary(for image), and sends it back to the frontend.
+6.  The user sees the result on their screen. If a patient is diagnosed, the app provides personalised summary and queries the database for a list of doctors to display.
 
 ## 🧑‍🤝‍🧑 Project Team
 
-- Member 1: Aayush Chhajed
-- Member 2: Nirav Jain
-- Member 3: Aryan Kothawade
-- Member 4: Varad Palod
+- Member 1: Aayush Chhajed (Backend)
+- Member 2: Nirav Jain (ML)
+- Member 3: Aryan Kothawade (Frontend)
+- Member 4: Varad Palod (Frontend)
