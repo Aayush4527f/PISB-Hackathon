@@ -4,38 +4,38 @@
 <head>
   <meta charset="UTF-8">
   <title>Register | Pneumonia Detection</title>
-  <link rel="stylesheet" href="style.css">
-  
+  <link rel="stylesheet" href="register.css">
 </head>
 <body>
-  <img src="https://img.icons8.com/ios-filled/50/2563eb/stethoscope.png" class="logo" alt="Logo"/>
-  <div class="title">Create Account</div>
-  <div class="subtitle">Join us to detect pneumonia early</div>
+  <div class="login-wrapper">
+    <img src="https://img.icons8.com/ios-filled/80/2563eb/stethoscope.png" class="logo" alt="Logo"/>
+    <div class="title">Create Account</div>
+    <div class="subtitle">Join us to detect pneumonia early</div>
 
-  <div class="container">
-    <form>
+    <div class="login-container">
+      <form>
+        <label>Username</label>
+        <input type="text" placeholder="Enter your username" id="username" required />
 
-      <label>Username</label>
-      <input type="username" placeholder="Enter your username" id="username" required />
+        <label>Password</label>
+        <input type="password" placeholder="Create a password" id="password" required />
 
-      <label>Password</label>
-      <input type="password" placeholder="Create a password" id="password" required />
+        <label>Confirm Password</label>
+        <input type="password" placeholder="Confirm your password" id="confirm_password" required />
 
-      <label>Confirm Password</label>
-      <input type="password" placeholder="Confirm your password" id="confirm_password" required />
+        <label>User Type</label>
+        <select required id="user_type">
+          <option value="">Select User Type</option>
+          <option>Doctor</option>
+          <option>Patient</option>
+        </select>
 
-      <label>User Type</label>
-      <select required id="user_type">
-        <option value="">Select User Type</option>
-        <option>Doctor</option>
-        <option>Patient</option>
-      </select>
+        <button type="submit">Register</button>
+      </form>
 
-      <button type="submit">Register</button>
-    </form>
-
-    <div class="links">
-      <a href="login.html">Already have an account? Log in</a>
+      <div class="links">
+        <a href="login.html">Already have an account? Log in</a>
+      </div>
     </div>
   </div>
   <script src="register.js"></script>

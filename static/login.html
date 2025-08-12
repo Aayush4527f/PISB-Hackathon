@@ -4,31 +4,37 @@
 <head>
   <meta charset="UTF-8">
   <title>Login | Pneumonia Detection</title>
-  <link rel="stylesheet" href="style.css">
-  
-
+  <link rel="stylesheet" href="login.css">
 </head>
 <body>
-  <img src="https://img.icons8.com/ios-filled/50/2563eb/stethoscope.png" class="logo" alt="Logo"/>
-  <div class="title">Pneumonia Detection</div>
-  <div class="subtitle">Sign in to your account to continue</div>
+  <div class="background-overlay"></div>
 
   <div class="container">
-    <form>
-      <label>Email or Username</label>
-      <input type="username" placeholder="Enter your username" id="username" required />
+    <div class="logo-section">
+      <img src="https://img.icons8.com/ios-filled/80/2563eb/stethoscope.png" class="logo" alt="Logo"/>
+      <h1 class="title">Pneumonia Detection</h1>
+      <p class="subtitle">AI-powered early detection</p>
+    </div>
 
-      <label>Password</label>
-      <input type="password" id="password" placeholder="Enter your password" id="password" required />
+    <form>
+      <div class="input-group">
+        <span class="input-icon">👤</span>
+        <input type="text" placeholder="Enter your username" id="username" required />
+      </div>
+
+      <div class="input-group">
+        <span class="input-icon">🔒</span>
+        <input type="password" placeholder="Enter your password" id="password" required />
+      </div>
 
       <button type="submit">Log In</button>
-    </form>
 
-    <div class="links">
-      <a href="register.html">Sign Up</a>
-    </div>
+      <div class="links">
+        <a href="register.html">Sign Up</a>
+      </div>
+    </form>
   </div>
+
   <script src="login.js"></script>
 </body>
-
 </html>
