@@ -147,8 +147,10 @@ document.addEventListener("DOMContentLoaded", async () => {
         results_section.style.backgroundColor = "#f0fff0";
         // Format the summary from the response
         const formattedSummary = formatGeminiOutput(data.summary);
+        const score = data.score;
         results_content.innerHTML = `
             <p><strong>Diagnosis:</strong> ${data.diagnosis ? 'Pneumonia Detected' : 'No Pneumonia Detected'}</p>
+            <p><strong>Chances of Pneumonia are:</strong> ${score*100}%</p>
             <p><strong>Summary:</strong> ${formattedSummary}</p>
             `;
         if (data.diagnosis && role === "patient") {

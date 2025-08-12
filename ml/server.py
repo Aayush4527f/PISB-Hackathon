@@ -1,4 +1,5 @@
 import os
+os.environ["TF_ENABLE_ONEDNN_OPTS"] = "0" # set environment variable for dnn so that we get precise floating values
 import numpy as np
 from flask import Flask, request, jsonify
 from PIL import Image
@@ -6,6 +7,7 @@ import io
 from tensorflow.keras.models import load_model
 import google.generativeai as genai
 from dotenv import load_dotenv
+
 
 # --- Step 1: Initialize Flask and Load Environment Variables ---
 app = Flask(__name__)
@@ -68,10 +70,7 @@ def analyze_scan_for_details(image_bytes):
 
 
 # --- Step 6: Define the function to get recommendations from Gemini ---
-def get_gemini_summary(scan_details):
-    """
-    Sends a prompt to the Gemini API with the scan details and returns a summary.
-    """
+def get_gemini_summary(location,chances):
     if 'genai_model' in globals() and genai_model is None:
         return "Could not generate summary because the Gemini API is not configured."
 
@@ -82,19 +81,24 @@ def get_gemini_summary(scan_details):
     prompt = f"""
     You are a helpful medical assistant. Your role is to provide a clear, personalized summary and general recommendations for a patient based on their chest X-ray findings. Do not provide a diagnosis, but explain the findings in simple terms.
 
-    A patient's X-ray scan shows potential signs of pneumonia. Here is a specific description of the condition:
-    "{scan_details}"
+    A patient's X-ray scan shows potential signs of pneumonia. Here is the location of the most fluid concentration:
+    "{location}"
 
-    Based on this, please generate a response that includes:
+    Chances of Pneumonia are {chances*100}%
+
+    Based on this, please generate a response of atleast 150 to 200 words max that includes:
     1. A brief, easy-to-understand summary of the findings.
     2. General, non-prescriptive recommendations (e.g., "it is important to consult with a healthcare provider," "ensure you get plenty of rest," "stay hydrated").
-    3. A concluding sentence encouraging the patient to discuss the full report with their doctor for a formal diagnosis and treatment plan.
+    3. Home remedies that could be dangerous or things to avoid which might increase complications.
+    4. Make sure the chances of pneumonia is mentioned at the start
 
     Keep the tone reassuring and professional. Structure the output clearly.
+    "Remember, this is just a summary of the X-ray findings. Please discuss the complete report with your doctor to get a formal diagnosis and develop a personalized treatment plan."
+    ALWAYS SAY THIS AT THE END
     """
 
     try:
-        print("Sending prompt to Gemini API...")
+        print("Sending prompt to Gemini")
         response = gemini_model.generate_content(prompt)
         print("Received response from Gemini.")
         return response.text
@@ -134,12 +138,12 @@ def predict():
             scan_details = analyze_scan_for_details(img_bytes)
             
             # 2. Get the personalized summary from Gemini
-            summary = get_gemini_summary(scan_details)
+            summary = get_gemini_summary(scan_details,score)
 
         # (MODIFIED) Create the final result dictionary
         result = {
             'prediction': label,
-            'confidence': score,
+            'score': score,
             'summary': summary  # Add the summary to the response
         }
 

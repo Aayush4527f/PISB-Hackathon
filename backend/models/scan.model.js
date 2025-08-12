@@ -10,7 +10,6 @@ const scanSchema = mongoose.Schema({
     },
     patient_id:{
         type: String,
-        required: true,
         unique: true
     },
     is_pneumonia:{

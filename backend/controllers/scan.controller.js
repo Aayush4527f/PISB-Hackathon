@@ -22,6 +22,7 @@ export const uploadScan = async (req, res, next) => {
 
         const diagnosis = mlResult.prediction === 'Pneumonia'; // true if 'Pneumonia', else false
         const summary = mlResult.summary;
+        const score = mlResult.score;
 
 
         // if req.user.is_doc then save image to cloudinary and save the results
@@ -33,7 +34,7 @@ export const uploadScan = async (req, res, next) => {
             await Scan.create({ doctor: req.user.id, patient_id: req.body.patient_id, url: saved_url, is_pneumonia: diagnosis, summary:summary, note:req.body.note });
         }
         // return the output from python child process
-        return res.status(200).json({ success: true, summary: summary, diagnosis: diagnosis });
+        return res.status(200).json({ success: true, summary: summary, diagnosis: diagnosis, score:score });
     }
     catch (error) {
         next(error);
