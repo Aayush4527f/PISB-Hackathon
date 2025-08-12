@@ -40,7 +40,7 @@ body {
   max-width: 400px;
   width: 100%;
   z-index: 1;
-  animation: floatUp 0.8s ease forwards;
+  animation: floatUp 1.0s ease forwards;
   border-top: 4px solid #2563eb;
 }
 
