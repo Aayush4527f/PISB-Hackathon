@@ -9,6 +9,10 @@
       background-color: #f4f7fa;
       color: #333;
       line-height: 1.6;
+          background: linear-gradient(95deg, #3b82f6, #f472b6); /* Blue → Pink gradient */
+    
+  background-size: cover;
+  background-blend-mode: overlay;
     }
 
     /* Navbar */
