@@ -18,6 +18,14 @@ const UserSchema = mongoose.Schema({
     is_doc: {
         type: Boolean,
         default: false
+    },
+    location: {
+        type: String,
+        default: "Pune"
+    },
+    contact: {
+        type: String,
+        default:""
     }
 });
 

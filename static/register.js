@@ -8,8 +8,10 @@
     const password = document.getElementById("password").value;
     const confirmPassword = document.getElementById("confirm_password").value;
     const userType = document.getElementById("user_type").value;
+    const location = document.getElementById("location").value.trim();
+    const contact = document.getElementById("contact").value;
 
-    if (!username || !password || !confirmPassword || !userType) {
+    if (!username || !password || !confirmPassword || !userType || !location || !contact) {
       alert("Please fill in all fields.");
       return;
     }
@@ -23,7 +25,7 @@
       const res = await fetch("/api/user/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, password, is_doc:userType=="Doctor" }),
+        body: JSON.stringify({ username, password, is_doc:userType=="Doctor",location:location, contact:contact}),
       });
 
       const data = await res.json();

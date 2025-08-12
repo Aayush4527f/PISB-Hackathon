@@ -19,7 +19,7 @@
     </div>
     <div class="menu">
       <a class="hover-button" href="#"><i class="fas fa-upload"></i>Upload X-ray</a>
-      <a href="/dashboard.html" class="hover-button"><i class="fas fa-user"></i>Dashboard</a>
+      <a href="/dashboard.html" class="hover-button" id="dashboard_link"><i class="fas fa-user"></i>Dashboard</a>
       <a href="/login.html" class="hover-button" id="logout">Log Out</a>
     </div>
   </div>
@@ -46,7 +46,7 @@
             <label for="patient_id">Patient ID</label>
             <input type="text" id="patient_id" placeholder="Enter patient ID (Mandatory)" required />
         </div>
-        <div>
+        <div id = "note_div">
             <label for="note">Notes for the Doctor</label>
             <input type="text" id="note" placeholder="Enter optional notes" />
         </div>
@@ -61,6 +61,16 @@
       <div id="results_content"></div>
     </div>
   </div>
+
+  <div id="doctors_section" style="display: none;">
+  <h3>Available Doctors</h3>
+  <ul id="doctors_list">
+    <!-- <li>
+      <span class="doctor_name">Dr. John Doe</span> - 
+      <span class="doctor_phone">+1 234 567 890</span>
+    </li> -->
+  </ul>
+</div>
 
   <div class="info-section">
     <div class="info-card">

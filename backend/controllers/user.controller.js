@@ -23,7 +23,7 @@ export const registerUser = async (req, res, next)=>{
 
     try {
         
-        const saved_user = await User.create({username:input.username,password:input.password,is_doc:input.is_doc});
+        const saved_user = await User.create({username:input.username,password:input.password,is_doc:input.is_doc,location:input.location,contact:input.contact});
         const token = jsonwebtoken.sign({id:saved_user._id},process.env.SECRET,{expiresIn:"1d"});
         return res.status(201).json({ success: true, token:token, message:"successful registration"});
     }
@@ -90,3 +90,21 @@ export const deleteUser = async (req, res, next) => {
     }
 
 };
+
+export const get_role = async(req,res)=>{
+    if(!req.user) return res.status(401).json({success:false, message:"Unauthorized"});
+
+    if(req.user.is_doc){
+        return res.status(200).json({success:true, role:"doctor"});
+    } 
+    else return res.status(200).json({success:true, role:"patient"});
+}
+
+export const get_doctors = async (req,res,next)=>{
+    try {
+        let doctors = await User.find({location:req.user.location,is_doc:true}).select('-password');
+        return res.status(200).json({success:true,doctors:doctors});
+    } catch (error) {
+        next(error);
+    }
+}
