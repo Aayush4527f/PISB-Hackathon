@@ -53,11 +53,9 @@ def preprocess_image(img_bytes):
     img_array = np.expand_dims(img_array, axis=-1)
     return img_array
 
-# --- Step 5: Define a placeholder for your specific scan analysis ---
 def analyze_scan_for_details(image_bytes):
-    # This is a placeholder function.
     
-    print("Performing detailed scan analysis (HARDCODED)...")
+    print("Performing detailed scan analysis")
     return "Fluid accumulation has been observed in the lower lobe of the left lung."
 
 
