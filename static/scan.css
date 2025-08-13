@@ -203,6 +203,8 @@ body {
   margin-top: 2rem;
   padding: 1.5rem;
   border-radius: 0.5rem;
+  background-color: var(--success-color);
+  color: white;
 }
 
 /* Info Section */

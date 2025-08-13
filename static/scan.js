@@ -35,7 +35,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     doctors.forEach(doctor => {
       const li = document.createElement("li");
       li.innerHTML = `
-      <span class="doctor_name">${doctor.username}</span> - 
+      <span class="doctor_name">${doctor.username}</span> ==> 
       <span class="doctor_contact">${doctor.contact}</span>
     `;
       doctorsList.appendChild(li);
@@ -144,7 +144,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       if (data.success) {
         results_title.textContent = "Analysis Complete";
         results_section.style.border = "2px solid #4CAF50";
-        results_section.style.backgroundColor = "#f0fff0";
+        // results_section.style.backgroundColor = "#f0fff0";
         // Format the summary from the response
         const formattedSummary = formatGeminiOutput(data.summary);
         const score = data.score;
@@ -163,7 +163,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       } else {
         results_title.textContent = "Analysis Failed";
         results_section.style.border = "2px solid #f44336";
-        results_section.style.backgroundColor = "#fff9f9";
+        // results_section.style.backgroundColor = "#fff9f9";
         results_content.innerHTML = `<p>${data.message || 'An unknown error occurred.'}</p>`;
       }
     } catch (err) {
@@ -176,7 +176,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       results_section.style.display = "block";
       results_title.textContent = "Error";
       results_section.style.border = "2px solid #f44336";
-      results_section.style.backgroundColor = "#fff9f9";
+      // results_section.style.backgroundColor = "#fff9f9";
       results_content.innerHTML = `<p>A network or server error occurred. Please try again.</p>`;
     }
   });
