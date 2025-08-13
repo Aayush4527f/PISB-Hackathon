@@ -323,6 +323,57 @@ body {
   }
 }
 
+/* Doctors Section */
+#doctors_section {
+  margin: 2rem auto;
+  padding: 1.5rem;
+  max-width: 800px;
+  background-color: #1e1e1e;
+  border-radius: 0.75rem;
+  border: 1px solid var(--primary-color);
+  box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.5);
+}
+
+#doctors_section h3 {
+  color: var(--primary-color);
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+  text-align: center;
+}
+
+#doctors_list {
+  list-style: none; /* remove bullets */
+  padding: 0;
+  margin: 0;
+}
+
+#doctors_list li {
+  background-color: #2e2e2e;
+  border: 1px solid #3b3b3b;
+  padding: 0.75rem 1rem;
+  margin-bottom: 0.75rem;
+  border-radius: 0.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: background-color 0.3s ease;
+}
+
+#doctors_list li:hover {
+  background-color: #3b3b3b;
+}
+
+.doctor_name {
+  font-weight: 600;
+  color: #fff;
+}
+
+.doctor_phone {
+  color: #ccc;
+  font-size: 0.95rem;
+}
+
+
 @media (max-width: 480px) {
   .upload-card h2 {
     font-size: 1.5rem;
