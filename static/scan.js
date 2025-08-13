@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   if (role === "patient") {
     document.getElementById("dashboard_link").style.display = "none";
-    document.getElementById("note_div").style.display = "none";
+    document.getElementsByClassName("patient-info-form")[0].style.display = "none";
   }
 
   function populateDoctors(doctors) {
