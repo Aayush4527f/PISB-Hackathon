@@ -13,12 +13,10 @@ from dotenv import load_dotenv
 app = Flask(__name__)
 
 # Load environment variables from ../.env
-# This will look for a .env file in the directory *above* the current one
 dotenv_path = os.path.join(os.path.dirname(__file__), '..', '.env')
 load_dotenv(dotenv_path=dotenv_path)
 
 # --- Step 2: Configure the Gemini API ---
-# Make sure you have GOOGLE_API_KEY="YOUR_API_KEY" in your .env file
 try:
     api_key = os.getenv("GOOGLE_API_KEY")
     if not api_key:
@@ -33,7 +31,6 @@ except Exception as e:
 # --- Step 3: Load your trained model ---
 print("Loading pneumonia detection model...")
 try:
-    # Make sure 'pneumonia_detection_model.h5' is in the same directory or provide the full path
     model_path = 'C:/Users/admin/Desktop/code/clg/hackathon/ml/pneumonia_detection_model.h5'
     if not os.path.exists(model_path):
         raise FileNotFoundError(f"Model file not found at: {model_path}")
@@ -56,16 +53,11 @@ def preprocess_image(img_bytes):
     img_array = np.expand_dims(img_array, axis=-1)
     return img_array
 
-# --- (NEW) Step 5: Define a placeholder for your specific scan analysis ---
+# --- Step 5: Define a placeholder for your specific scan analysis ---
 def analyze_scan_for_details(image_bytes):
-    """
-    This is a placeholder function.
-    In a real application, this function would contain the logic
-    to analyze the scan and return specific details.
-    For now, it returns a hardcoded example string.
-    """
-    # In your real implementation, you would run your other model/logic here
-    print("Performing detailed scan analysis (placeholder)...")
+    # This is a placeholder function.
+    
+    print("Performing detailed scan analysis (HARDCODED)...")
     return "Fluid accumulation has been observed in the lower lobe of the left lung."
 
 
