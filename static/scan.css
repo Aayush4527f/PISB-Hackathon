@@ -10,16 +10,14 @@
   box-sizing: border-box;
 }
 
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      background-color: #f4f7fa;
-      color: #333;
-      line-height: 1.6;
-          background: linear-gradient(95deg, #3b82f6, #f472b6); /* Blue → Pink gradient */
-    
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #262626;
+  color: #e0e0e0;
+  line-height: 1.6;
   background-size: cover;
   background-blend-mode: overlay;
-    }
+}
 
 /* Navbar */
 .navbar {
@@ -27,7 +25,7 @@
   justify-content: space-between;
   align-items: center;
   background-color: var(--success-color);
-  color: #fff;
+  color: #ffd700;
   padding: 1rem 2.5rem;
   box-shadow: 0 0.125rem 0.5rem rgba(0, 0, 0, 0.1);
 }
@@ -91,7 +89,7 @@
   border: 2px solid var(--primary-color);
   margin: 1.5rem auto;
   width: 90%;
-  max-width: 700px;
+  max-width: 1150px;
   padding: 2.5rem;
   border-radius: 0.75rem;
   box-shadow: 0 0.25rem 1rem rgba(0, 0, 0, 0.5);
@@ -224,7 +222,7 @@
   flex: 1 1 300px;
   text-align: center;
   border-radius: 0.625rem;
-  box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0.25rem 0.75rem #ffd70099;
 }
 
 .info-card .fas {
