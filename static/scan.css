@@ -10,14 +10,16 @@
   box-sizing: border-box;
 }
 
-body {
-  font-family: 'Segoe UI', sans-serif;
-  background-color: #262626;
-  color: #e0e0e0;
-  line-height: 1.6;
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f4f7fa;
+      color: #333;
+      line-height: 1.6;
+          background: linear-gradient(95deg, #3b82f6, #f472b6); /* Blue → Pink gradient */
+    
   background-size: cover;
   background-blend-mode: overlay;
-}
+    }
 
 /* Navbar */
 .navbar {

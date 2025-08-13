@@ -13,9 +13,12 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(135deg, #dcefff, #f0f7ff);
   position: relative;
   overflow: hidden;
+    background: linear-gradient(135deg, #3b82f6, #f472b6); /* Blue → Pink gradient */
+    
+  background-size: cover;
+  background-blend-mode: overlay;
 }
 
 /* Background illustration */
