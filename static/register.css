@@ -73,12 +73,14 @@ label {
 
 input,
 select {
-  width: 90%;
+  box-sizing: border-box; /* ensures padding & border don't mess with width */
+  width: 100%;
   padding: 10px 10px 10px 38px; /* space for icon */
   border: 1px solid #d1d5db;
   border-radius: 8px;
   font-size: 14px;
   background-color: #6b7280;
+  color: #fff;
 }
 
 input::placeholder {
