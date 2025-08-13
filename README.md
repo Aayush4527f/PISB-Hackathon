@@ -5,7 +5,7 @@
 ---
 
 ## 🚀 The Problem
-
+Pneumonia detection prediction and anamoly detection using xray images
 Pneumonia is a leading cause of mortality, especially in regions with limited access to radiologists. Early and accurate diagnosis is critical for effective treatment, but delays can occur due to the time it takes for a specialist to review an X-ray. This tool aims to bridge that gap by providing instant, AI-driven analysis to assist both patients and doctors.
 
 ## ✨ Our Solution
