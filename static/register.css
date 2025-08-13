@@ -4,10 +4,9 @@ body {
   background-color: #262626;
     
   background-size: cover;
-  background-blend-mode: overlay; /* blends gradient & image */
+  background-blend-mode: overlay; 
+
 }
-
-
 
 .login-wrapper {
   max-width: 400px;
@@ -44,9 +43,7 @@ body {
   margin-bottom: 20px;
 }
 
-/* =========================
-   Form inputs with icons
-   ========================= */
+/* Form inputs with icons */
 form {
   text-align: left;
 }
@@ -120,5 +117,4 @@ button:hover {
 .links a:hover {
   text-decoration: underline;
 }
-
 
