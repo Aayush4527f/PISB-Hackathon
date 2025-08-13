@@ -6,7 +6,7 @@
 
     body {
       font-family: 'Segoe UI', sans-serif;
-      background-color: #f4f7fa;
+      background-color: #262626;
       color: #333;
       line-height: 1.6;
     }
@@ -16,8 +16,8 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      background-color: #2f80ed;
-      color: #fff;
+      background-color: #2e2e2e;
+      color: #ffd700;
       padding: 1rem 2.5rem;
       box-shadow: 0 0.125rem 0.5rem rgba(0, 0, 0, 0.1);
     }
@@ -64,6 +64,7 @@
     }
 
     .dashboard h1 {
+      color: #ffffff;
       margin-bottom: 0.5rem;
     }
 
