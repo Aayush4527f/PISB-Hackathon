@@ -15,7 +15,7 @@ body {
   align-items: center;
   position: relative;
   overflow: hidden;
-    background: linear-gradient(135deg, #3b82f6, #f472b6); /* Blue → Pink gradient */
+  background-color: #262626;
     
   background-size: cover;
   background-blend-mode: overlay;
@@ -23,7 +23,7 @@ body {
 
 /* Background illustration */
 .background-overlay {
-  background: url('https://cdn-icons-png.flaticon.com/512/616/616494.png') no-repeat center;
+
   background-size: 400px;
   opacity: 0.05;
   position: absolute;
@@ -36,15 +36,15 @@ body {
 
 /* Login Card */
 .container {
-  background: #fff;
+  background: #2e2e2e;
   padding: 2rem;
   border-radius: 1rem;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 8px 25px #ffd700;
   max-width: 400px;
   width: 100%;
   z-index: 1;
   animation: floatUp 1.0s ease forwards;
-  border-top: 4px solid #2563eb;
+  border-top: 4px solid #ffd700;
 }
 
 @keyframes floatUp {
@@ -66,7 +66,7 @@ body {
 .title {
   font-size: 1.8rem;
   font-weight: bold;
-  color: #111827;
+  color: #ffffff;
 }
 
 .subtitle {
@@ -89,8 +89,14 @@ body {
   color: #6b7280;
 }
 
+input::placeholder {
+  color: #f3f4f6; /* Light text for visibility */
+  opacity: 1; /* Ensures full opacity */
+}
+
 input {
   width: 100%;
+  background-color: #6b7280;
   padding: 0.75rem 0.75rem 0.75rem 2.5rem;
   border: 1px solid #d1d5db;
   border-radius: 0.5rem;
@@ -108,7 +114,7 @@ input:focus {
 button {
   width: 100%;
   padding: 0.8rem;
-  background: linear-gradient(90deg, #2563eb, #1d4ed8);
+  background:linear-gradient(90deg, #2563eb, #1d4ed8);
   color: white;
   font-weight: bold;
   border: none;
