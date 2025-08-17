@@ -1,7 +1,7 @@
 body {
   margin: 0;
   font-family: Arial, sans-serif;
-  background-color: #262626;
+  background-color: #050404;
     
   background-size: cover;
   background-blend-mode: overlay; 
@@ -119,4 +119,3 @@ button:hover {
 .links a:hover {
   text-decoration: underline;
 }
-
