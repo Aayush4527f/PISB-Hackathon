@@ -4,3 +4,4 @@ Pillow
 tensorflow
 google-generativeai
 python-dotenv
+gunicorn

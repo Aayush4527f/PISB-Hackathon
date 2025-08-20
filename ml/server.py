@@ -31,7 +31,7 @@ except Exception as e:
 # --- Step 3: Load your trained model ---
 print("Loading pneumonia detection model...")
 try:
-    model_path = 'C:/Users/admin/Desktop/code/clg/hackathon/ml/pneumonia_detection_model.h5'
+    model_path = os.getenv("MODEL_PATH")
     if not os.path.exists(model_path):
         raise FileNotFoundError(f"Model file not found at: {model_path}")
     model = load_model(model_path)
